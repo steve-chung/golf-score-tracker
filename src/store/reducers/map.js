@@ -10,7 +10,6 @@ let initState = {
 }
 
 const map = (state = initState, action) => {
-  console.log(state)
   switch (action.type) {
     case SET_MAPCENTER:
       const stateLat = dotProp.set(state, 'map.lat', action.lat)
