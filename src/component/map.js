@@ -1,0 +1,58 @@
+import React, {Component} from 'react'
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
+import { connect } from 'react-redux'
+import { setCenter } from '../store/action/map'
+
+class Map extends Component {
+  constructor(props) {
+    super(props)
+
+  }
+  componentDidMount() {
+
+    const id = navigator.geolocation.watchPosition(position => {
+      this.props.setCenter(position.coords.latitude, position.coords.longitude)
+    //   this.setState({
+    //     lat: position.coords.latitude,
+    //     lng: position.coords.longitude
+    //   })
+    }, (err) => {
+      console.error(err)
+    })
+  }
+  render() {
+    const {lat, lng} = this.props.map
+    // const lat = this.props
+    // const lng = this.props.map.lng
+    console.log(lat)
+    const GoogleMapContainer = withScriptjs(withGoogleMap(props => (
+      <GoogleMap
+        defaultZoom={12}
+        defaultCenter={{ lat, lng }}
+      >
+        <Marker position={{ lat, lng }} />
+      </GoogleMap>
+    )))
+
+    return (
+      <div style={{height: `20rem`}}>
+        <GoogleMapContainer
+          googleMapURL='https://maps.googleapis.com/maps/api/js?key=AIzaSyBras_Muhkliq5FTPdbIDXMgaKFPdZOX58&v=3.exp&libraries=geometry,drawing,places'
+          loadingElement={<div style={{ heigh: `100%`}}/>}
+          containerElement={<div style={{height: `100%`}}/>}
+          mapElement={<div style={{height: `100%`}}/>}
+        />
+      </div>
+
+    )
+  }
+
+}
+
+function mapStateToProps(state) {
+  return {
+    map: state.map.map
+  }
+}
+
+export default connect(mapStateToProps, {setCenter})(Map)

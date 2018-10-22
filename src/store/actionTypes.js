@@ -1,0 +1,1 @@
+export const SET_MAPCENTER = 'SET_MAPCENTER'
