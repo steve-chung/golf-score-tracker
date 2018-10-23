@@ -8,6 +8,7 @@ import PlacesAutocomplete, {
 } from 'react-places-autocomplete'
 import {connect} from 'react-redux'
 import {setCenter} from '../store/action/map'
+import CourseList from '../component/courseList'
 
 const styles = theme => ({
   container: {
@@ -132,15 +133,15 @@ class App extends Component {
       </div>
     )
     return (
-      <div className='container'>
+      <div className='container' style={{width: '80%', margin: '0, auto'}}>
         <PlacesAutocomplete value={this.state.address}
           onChange={this.handleChange} onSelect={this.hanleSelect} >
           {renderFunc}
         </PlacesAutocomplete>
-
         <Map style={{height: `20rem`}} courses = {courses} lat={lat} lng={lng}>
         </Map>
-
+        { courses && <CourseList courses={courses}>
+        </CourseList>}
       </div>
 
     )

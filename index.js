@@ -12,7 +12,7 @@ app.use('/api/position', (req, response, next) => {
   client.search({
     latitude: +req.query.lat,
     longitude: +req.query.lng,
-    radius: 5000,
+    radius: 25000,
     categories: 'golf',
     sort_by: 'distance'
   })
