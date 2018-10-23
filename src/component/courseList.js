@@ -7,7 +7,7 @@ const styles = {
     maxWidth: '100%'
   },
   title: {
-    fontSize: '2rem',
+    fontSize: '1rem',
     fontWeight: 700
   }
 }

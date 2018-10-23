@@ -22,6 +22,10 @@ const styles = theme => ({
   add: {
     float: 'right',
     height: 80
+  },
+  title: {
+    marginTop: '3.5rem',
+    marginBottom: '2.5rem'
   }
 })
 
@@ -133,12 +137,13 @@ class App extends Component {
       </div>
     )
     return (
-      <div className='container' style={{width: '80%', margin: '0, auto'}}>
+      <div className='container' style={{width: '80%', margin: 'auto'}}>
+        <h1 className='title'> Golf Score Keeper </h1>
         <PlacesAutocomplete value={this.state.address}
           onChange={this.handleChange} onSelect={this.hanleSelect} >
           {renderFunc}
         </PlacesAutocomplete>
-        <Map style={{height: `20rem`}} courses = {courses} lat={lat} lng={lng}>
+        <Map style={{height: '40rem'}} courses = {courses} lat={lat} lng={lng}>
         </Map>
         { courses && <CourseList courses={courses}>
         </CourseList>}
