@@ -1,48 +1,46 @@
-import React, {Component} from 'react'
+import React from 'react'
 import { withGoogleMap, GoogleMap, Marker } from 'react-google-maps'
-import { connect } from 'react-redux'
-import { setCenter } from '../store/action/map'
+import { MarkerClusterer } from 'react-google-maps/lib/components/addons/MarkerClusterer'
 
-class Map extends Component {
+const Map = props => {
 
-  componentDidMount() {
-
-    navigator.geolocation.watchPosition(position => {
-      this.props.setCenter(position.coords.latitude, position.coords.longitude)
-    }, (err) => {
-      console.error(err)
-    })
-  }
-  render() {
-    const {lat, lng} = this.props.map
-
-    const GoogleMapContainer = withGoogleMap(props => (
+  const {lat, lng} = props
+  const GoogleMapContainer = withGoogleMap(() => {
+    return (
       <GoogleMap
         defaultZoom={12}
         defaultCenter={{ lat, lng }}
-      >
-        <Marker position={{ lat, lng }} />
+      > { (props.courses) &&
+        (<MarkerClusterer
+          averageCenter
+          enableRetinaIcons
+          gridSize={60}
+        >
+          {props.courses.map((marker, i) => (
+            <Marker
+              position={{lat: +marker.coords.latitude, lng: +marker.coords.longitude}}
+              key={i}
+            />
+          ))}
+        </MarkerClusterer>)
+        }
+
       </GoogleMap>
-    ))
-
-    return (
-      <div style={{height: `20rem`}}>
-        <GoogleMapContainer
-          loadingElement={<div style={{ heigh: `100%` }}/>}
-          containerElement={<div style={{height: `100%`}}/>}
-          mapElement={<div style={{height: `100%`}}/>}
-        />
-      </div>
-
     )
-  }
+
+  })
+
+  return (
+    <div style={{height: `20rem`}}>
+      <GoogleMapContainer
+        loadingElement={<div style={{ heigh: `100%` }}/>}
+        containerElement={<div style={{height: `100%`}}/>}
+        mapElement={<div style={{height: `100%`}}/>}
+      />
+    </div>
+
+  )
 
 }
 
-function mapStateToProps(state) {
-  return {
-    map: state.map.map
-  }
-}
-
-export default connect(mapStateToProps, {setCenter})(Map)
+export default Map

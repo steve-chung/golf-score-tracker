@@ -28,10 +28,28 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      address: ''
+      currentPosition: {
+        lat: 0,
+        lng: 0
+      },
+      address: '',
+      courses: null
     }
     this.handleChange = this.handleChange.bind(this)
     this.hanleSelect = this.handleSelect.bind(this)
+    this.handleCourseInfo = this.handleCourseInfo.bind(this)
+  }
+
+  componentDidMount() {
+    navigator.geolocation.getCurrentPosition(position => {
+      this.setState({
+        currentPosition: {lat: position.coords.latitude,
+          lng: position.coords.longitude}
+      })
+    }, (err) => {
+      console.error(err)
+    })
+    this.handleCourseApi()
   }
 
   handleChange(e) {
@@ -40,16 +58,65 @@ class App extends Component {
     })
   }
 
+  handleCourseApi() {
+    const { lat, lng } = this.state.currentPosition
+    let lat2 = 0
+    let lng2 = 0
+    if (lat === 0 && lng === 0) {
+      navigator.geolocation.getCurrentPosition(position => {
+        lat2 = position.coords.latitude
+        lng2 = position.coords.longitude
+        fetch(`/api/position?lat=${lat2}&lng=${lng2}`, {method: 'GET'})
+          .then(res => res.json())
+          .then(res => {
+            this.handleCourseInfo(res)
+          })
+      }, (err) => {
+        console.error(err)
+      }, {timeout: 10000})
+    }
+    else {
+      fetch(`/api/position?lat=${lat}&lng=${lng}`, {method: 'GET'})
+        .then(res => res.json())
+        .then(res => this.handleCourseInfo(res))
+    }
+
+  }
+
+  handleCourseInfo(info) {
+    let newCourseInfo = []
+    let newObject = {}
+    for (let i = 0; i < info.length; i++) {
+      newObject.id = i
+      newObject.name = info[i].name
+      newObject.address = info[i].location.display_address
+      newObject.phone = info[i].display_phone
+      newObject.coords = info[i].coordinates
+      newCourseInfo.push(newObject)
+      newObject = {}
+    }
+    this.setState({
+      courses: newCourseInfo
+    })
+  }
+
   handleSelect(e) {
+
     geocodeByAddress(e)
       .then(res => getLatLng(res[0]))
       .then(latLng => {
-        this.props.setCenter(latLng.lat, latLng.lng)
+        this.setState({
+          currentPosition: {lat: latLng.lat,
+            lng: latLng.lng}
+        })
+        this.handleCourseApi()
       })
   }
 
   render() {
     const { classes } = this.props
+    const { courses } = this.state
+    const { lat, lng } = this.state.currentPosition
     const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions }) => (
       <div className="autocomplete-root">
         <TextField label='search city' placeholder='search' className={classes.textField}
@@ -71,7 +138,7 @@ class App extends Component {
           {renderFunc}
         </PlacesAutocomplete>
 
-        <Map style={{height: `20rem`}}>
+        <Map style={{height: `20rem`}} courses = {courses} lat={lat} lng={lng}>
         </Map>
 
       </div>
@@ -80,4 +147,10 @@ class App extends Component {
   }
 }
 
-export default connect(null, {setCenter})(withStyles(styles)(App))
+function mapStateToProps(state) {
+  return {
+    map: state.map.map
+  }
+}
+
+export default connect(mapStateToProps, {setCenter})(withStyles(styles)(App))
