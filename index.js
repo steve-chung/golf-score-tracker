@@ -20,9 +20,11 @@ app.get('/api/courses', (req, response, next) => {
       return response.json(res.jsonBody.businesses)
     })
     .catch(e => {
+      console.log(e)
       next(e)
     })
 })
+
 app.use(router)
 app.use(errorHandler)
 

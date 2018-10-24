@@ -52,11 +52,14 @@ class App extends Component {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         }
+      }, () => {
+        const {lat, lng} = this.state.currentPosition
+        this.handleCourseApi(lat, lng)
       })
     }, (err) => {
       console.error(err)
-    })
-    this.handleCourseApi()
+    },
+    {timeout: 10000})
   }
 
   handleChange(e) {
@@ -65,28 +68,13 @@ class App extends Component {
     })
   }
 
-  handleCourseApi() {
-    const { lat, lng } = this.state.currentPosition
-    let lat2 = 0
-    let lng2 = 0
-    if (lat === 0 && lng === 0) {
-      navigator.geolocation.getCurrentPosition(position => {
-        lat2 = position.coords.latitude
-        lng2 = position.coords.longitude
-        fetch(`/api/courses?lat=${lat2}&lng=${lng2}`, {method: 'GET'})
-          .then(res => res.json())
-          .then(res => {
-            this.handleCourseInfo(res)
-          })
-      }, (err) => {
+  handleCourseApi(lat, lng) {
+    fetch(`/api/courses?lat=${lat}&lng=${lng}`, {method: 'GET'})
+      .then(res => res.json())
+      .then(res => this.handleCourseInfo(res))
+      .catch(err => {
         console.error(err)
-      }, {timeout: 10000})
-    }
-    else {
-      fetch(`/api/courses?lat=${lat}&lng=${lng}`, {method: 'GET'})
-        .then(res => res.json())
-        .then(res => this.handleCourseInfo(res))
-    }
+      })
   }
 
   handleCourseInfo(info) {
@@ -116,8 +104,10 @@ class App extends Component {
             lat: latLng.lat,
             lng: latLng.lng
           }
+        }, () => {
+          const {lat, lng} = this.state.currentPosition
+          this.handleCourseApi(lat, lng)
         })
-        this.handleCourseApi()
       })
   }
 
