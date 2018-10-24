@@ -1,11 +1,14 @@
 import React from 'react'
-import { CardContent, Typography, Card } from '@material-ui/core'
+import { CardContent, Typography, Card, Button } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = {
   card: {
     maxWidth: '100%',
     marginBottom: '10px'
+  },
+  button: {
+    float: 'right'
   },
   title: {
     fontSize: '1rem',
@@ -32,6 +35,9 @@ const CourseList = props => {
         </Typography>
         <Typography>
           Distance: {list.distance} mi
+          <Button variant='contained' color='primary' className={classes.button}>
+            Choose
+          </Button>
         </Typography>
 
       </CardContent>
