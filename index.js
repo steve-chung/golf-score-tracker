@@ -5,6 +5,7 @@ const app = server.create()
 const middleware = server.defaults()
 const router = server.router('db.json')
 const client = yelp.client(process.env.YELPKEY)
+const errorHandler = require('./error')
 app.use(middleware)
 
 app.get('/api/courses', (req, response, next) => {
@@ -19,10 +20,12 @@ app.get('/api/courses', (req, response, next) => {
       return response.json(res.jsonBody.businesses)
     })
     .catch(e => {
-      console.error(e)
+      next(e)
     })
 })
 app.use(router)
+app.use(errorHandler)
+
 app.listen(process.env.PORT, () => {
   console.log('Listening on port', process.env.PORT)
 })

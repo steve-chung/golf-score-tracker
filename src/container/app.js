@@ -81,7 +81,7 @@ class App extends Component {
       }, {timeout: 10000})
     }
     else {
-      fetch(`/api/position?lat=${lat}&lng=${lng}`, {method: 'GET'})
+      fetch(`/api/courses?lat=${lat}&lng=${lng}`, {method: 'GET'})
         .then(res => res.json())
         .then(res => this.handleCourseInfo(res))
     }
