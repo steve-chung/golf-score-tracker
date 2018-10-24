@@ -31,7 +31,7 @@ const Map = props => {
   })
 
   return (
-    <div style={{height: `20rem`}}>
+    <div style={{height: `30rem`}}>
       <GoogleMapContainer
         loadingElement={<div style={{ heigh: `100%` }}/>}
         containerElement={<div style={{height: `100%`}}/>}

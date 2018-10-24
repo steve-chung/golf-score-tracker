@@ -4,7 +4,7 @@ import {TextField, List, ListItem} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import PlacesAutocomplete, {
   geocodeByAddress,
-  getLatLng, loading
+  getLatLng
 } from 'react-places-autocomplete'
 import {connect} from 'react-redux'
 import {setCenter} from '../store/action/map'
@@ -123,7 +123,7 @@ class App extends Component {
     const { classes } = this.props
     const { courses } = this.state
     const { lat, lng } = this.state.currentPosition
-    const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions }) => (
+    const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions, loading }) => (
       <div className="autocomplete-root">
         <TextField label='search city' placeholder='search' className={classes.textField}
           fullWidth InputLabelProps={{ shrink: true }} {...getInputProps()} />
@@ -144,7 +144,7 @@ class App extends Component {
           onChange={this.handleChange} onSelect={this.hanleSelect} >
           {renderFunc}
         </PlacesAutocomplete>
-        <Map style={{height: '40rem'}} courses = {courses} lat={lat} lng={lng}>
+        <Map courses = {courses} lat={lat} lng={lng}>
         </Map>
         { courses && <CourseList courses={courses}>
         </CourseList>}

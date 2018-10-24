@@ -1,6 +1,4 @@
 .env
 package-lock.json
-materialize.css
 node_modules
-node_modules/
 .DS_Store
