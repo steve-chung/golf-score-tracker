@@ -1,6 +1,15 @@
 {
   "courses": [
-    { "id": 0
+    {
+      "id": 0
+    },
+    {
+      "id": 1
+    },
+    {
+      "date": "1540423266842",
+      "name": "OCPGI Orange County Par Golf Institute",
+      "id": 2
     }
   ]
 }
