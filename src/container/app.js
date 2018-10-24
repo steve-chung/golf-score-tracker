@@ -115,8 +115,13 @@ class App extends Component {
     const { lat, lng } = this.state.currentPosition
     const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions, loading }) => (
       <div className="autocomplete-root">
-        <TextField label='search city' placeholder='search' className={classes.textField}
-          fullWidth InputLabelProps={{ shrink: true }} {...getInputProps()} />
+        <TextField
+          label='search city'
+          placeholder='search'
+          className={classes.textField}
+          fullWidth
+          InputLabelProps={{ shrink: true }}
+          {...getInputProps()} />
         <List componet='nav' className="autocomplete-dropdown-container">
           {loading && <div>Loading...</div>}
           {suggestions.map((suggestion, i) => (
