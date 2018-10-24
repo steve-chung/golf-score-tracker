@@ -39,7 +39,7 @@ const CourseList = props => {
 
   return (
     <div>
-      {courses}
+      { courses }
     </div>
   )
 }
