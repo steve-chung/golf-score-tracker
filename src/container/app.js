@@ -78,18 +78,16 @@ class App extends Component {
   }
 
   handleCourseInfo(info) {
-    let newCourseInfo = []
-    let newObject = {}
-    for (let i = 0; i < info.length; i++) {
-      newObject.id = i
-      newObject.name = info[i].name
-      newObject.address = info[i].location.display_address
-      newObject.phone = info[i].display_phone
-      newObject.coords = info[i].coordinates
-      newObject.distance = (info[i].distance / 1609.344).toFixed(2)
-      newCourseInfo.push(newObject)
-      newObject = {}
-    }
+    const newCourseInfo = info.map((course) => {
+      return {
+        id: course.id,
+        name: course.name,
+        address: course.location.display_address,
+        phone: course.display_phone,
+        coords: course.coordinates,
+        distance: (course.distance / 1609.344).toFixed(2)
+      }
+    })
     this.setState({
       courses: newCourseInfo
     })
