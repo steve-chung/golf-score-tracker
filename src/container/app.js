@@ -97,6 +97,7 @@ class App extends Component {
       newObject.address = info[i].location.display_address
       newObject.phone = info[i].display_phone
       newObject.coords = info[i].coordinates
+      newObject.distance = (info[i].distance / 1609.344).toFixed(2)
       newCourseInfo.push(newObject)
       newObject = {}
     }

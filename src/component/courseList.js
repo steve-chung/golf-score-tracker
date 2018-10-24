@@ -30,6 +30,9 @@ const CourseList = props => {
         <Typography>
           Phone: {list.phone}
         </Typography>
+        <Typography>
+          Distance: {list.distance} mi
+        </Typography>
 
       </CardContent>
     </Card>
