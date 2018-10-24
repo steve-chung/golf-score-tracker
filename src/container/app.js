@@ -41,7 +41,7 @@ class App extends Component {
       courses: null
     }
     this.handleChange = this.handleChange.bind(this)
-    this.hanleSelect = this.handleSelect.bind(this)
+    this.handleSelect = this.handleSelect.bind(this)
     this.handleCourseInfo = this.handleCourseInfo.bind(this)
   }
 
@@ -106,7 +106,6 @@ class App extends Component {
   }
 
   handleSelect(e) {
-
     geocodeByAddress(e)
       .then(res => getLatLng(res[0]))
       .then(latLng => {
@@ -140,7 +139,7 @@ class App extends Component {
       <div className='container' style={{width: '80%', margin: 'auto'}}>
         <h1 className='title'> Golf Score Keeper </h1>
         <PlacesAutocomplete value={this.state.address}
-          onChange={this.handleChange} onSelect={this.hanleSelect} >
+          onChange={this.handleChange} onSelect={this.handleSelect} >
           {renderFunc}
         </PlacesAutocomplete>
         <Map courses = {courses} lat={lat} lng={lng}>
