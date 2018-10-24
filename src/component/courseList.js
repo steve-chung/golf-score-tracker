@@ -13,7 +13,6 @@ const styles = {
 }
 
 const CourseList = props => {
-  console.log(props.courses.address)
   const { classes } = props
   const courses = props.courses.map((list) => (
     <Card className={classes.card} key={list.id}>
@@ -36,19 +35,13 @@ const CourseList = props => {
 
       </CardContent>
     </Card>
+  ))
 
-  )
-
-  )
-
-  console.log(courses)
   return (
     <div>
       {courses}
     </div>
-
   )
-
 }
 
 export default withStyles(styles)(CourseList)
