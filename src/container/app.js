@@ -48,8 +48,10 @@ class App extends Component {
   componentDidMount() {
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
-        currentPosition: {lat: position.coords.latitude,
-          lng: position.coords.longitude}
+        currentPosition: {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        }
       })
     }, (err) => {
       console.error(err)
@@ -110,8 +112,10 @@ class App extends Component {
       .then(res => getLatLng(res[0]))
       .then(latLng => {
         this.setState({
-          currentPosition: {lat: latLng.lat,
-            lng: latLng.lng}
+          currentPosition: {
+            lat: latLng.lat,
+            lng: latLng.lng
+          }
         })
         this.handleCourseApi()
       })
