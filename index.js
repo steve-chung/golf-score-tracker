@@ -7,7 +7,7 @@ const router = server.router('db.json')
 const client = yelp.client(process.env.YELPKEY)
 app.use(middleware)
 
-app.use('/api/position', (req, response, next) => {
+app.get('/api/courses', (req, response, next) => {
   client.search({
     latitude: +req.query.lat,
     longitude: +req.query.lng,
@@ -17,8 +17,7 @@ app.use('/api/position', (req, response, next) => {
   })
     .then(res => {
       return response.json(res.jsonBody.businesses)
-    }
-    )
+    })
     .catch(e => {
       console.error(e)
     })

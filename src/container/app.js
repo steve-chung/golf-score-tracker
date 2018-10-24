@@ -71,7 +71,7 @@ class App extends Component {
       navigator.geolocation.getCurrentPosition(position => {
         lat2 = position.coords.latitude
         lng2 = position.coords.longitude
-        fetch(`/api/position?lat=${lat2}&lng=${lng2}`, {method: 'GET'})
+        fetch(`/api/courses?lat=${lat2}&lng=${lng2}`, {method: 'GET'})
           .then(res => res.json())
           .then(res => {
             this.handleCourseInfo(res)
