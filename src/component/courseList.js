@@ -4,7 +4,8 @@ import { withStyles } from '@material-ui/core/styles'
 
 const styles = {
   card: {
-    maxWidth: '100%'
+    maxWidth: '100%',
+    marginBottom: '10px'
   },
   title: {
     fontSize: '1rem',

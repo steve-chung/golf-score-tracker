@@ -6,8 +6,6 @@ import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete'
-import { connect } from 'react-redux'
-import { setCenter } from '../store/action/map'
 import CourseList from '../component/courseList'
 
 const styles = theme => ({
@@ -149,10 +147,4 @@ class App extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    map: state.map.map
-  }
-}
-
-export default connect(mapStateToProps, {setCenter})(withStyles(styles)(App))
+export default withStyles(styles)(App)
