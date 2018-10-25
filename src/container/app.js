@@ -1,12 +1,20 @@
 import React, { Component } from 'react'
 import Map from '../component/map'
-import { TextField, List, ListItem } from '@material-ui/core'
+import { TextField,
+  List,
+  ListItem,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Slide,
+  Button } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from 'react-places-autocomplete'
 import CourseList from '../component/courseList'
+// import Invite from './invite'
 
 const styles = theme => ({
   container: {
@@ -27,20 +35,28 @@ const styles = theme => ({
   }
 })
 
+function Transition(props) {
+  return <Slide direction="up" {...props} />
+}
+
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       currentPosition: {
         lat: 0,
         lng: 0
       },
       address: '',
-      courses: null
+      courses: null,
+      open: false,
+      selectedCourseName: ''
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
     this.handleCourseInfo = this.handleCourseInfo.bind(this)
+    this.handleChoose = this.handleChoose.bind(this)
+    this.handleClose = this.handleClose.bind(this)
   }
 
   componentDidMount() {
@@ -107,9 +123,49 @@ class App extends Component {
       })
   }
 
+  handleCouresPost(course) {
+    const date = Date.now()
+    fetch(`/courses`, {method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({date: `${date}`,
+        name: `${course}` })})
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
+
+  handleChoose(id) {
+    const {courses} = this.state
+    const chosenCourse = courses.filter((course) => {
+      return course.id === id
+    })
+    this.setState({
+      open: true,
+      selectedCourseName: chosenCourse[0].name
+    })
+  }
+
+  handleClose(e) {
+    const answer = e.target.textContent
+    const {selectedCourseName} = this.state
+    if (answer === 'Yes') {
+      this.handleCouresPost(selectedCourseName)
+    }
+    this.setState({
+      open: false,
+      selectedCourseName: ''
+    })
+  }
+
   render() {
     const { classes } = this.props
-    const { courses } = this.state
+    const { courses, selectedCourseName } = this.state
     const { lat, lng } = this.state.currentPosition
     const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions, loading }) => (
       <div className="autocomplete-root">
@@ -133,14 +189,35 @@ class App extends Component {
     return (
       <div className='container' style={{width: '80%', margin: 'auto'}}>
         <h1 className='title'> Golf Score Keeper </h1>
+
         <PlacesAutocomplete value={this.state.address}
           onChange={this.handleChange} onSelect={this.handleSelect} >
           {renderFunc}
         </PlacesAutocomplete>
         <Map courses = {courses} lat={lat} lng={lng}>
         </Map>
-        { courses && <CourseList courses={courses}>
+        { courses && <CourseList courses={courses} handleChoose={this.handleChoose}>
         </CourseList>}
+        <Dialog
+          open={this.state.open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            Do you want to play at {selectedCourseName}?
+          </DialogTitle>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              No
+            </Button>
+            <Button onClick={this.handleClose} color="primary">
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
 
     )
