@@ -14,6 +14,7 @@ import PlacesAutocomplete, {
   getLatLng
 } from 'react-places-autocomplete'
 import CourseList from '../component/courseList'
+// import Invite from './invite'
 
 const styles = theme => ({
   container: {
