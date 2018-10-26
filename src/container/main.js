@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, withRouter } from 'react-router-dom'
+import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import Home from './home'
 import Invite from './invite'
 
@@ -14,6 +14,7 @@ const Main = props => {
         />
         <Route
           exact path="/invite/:courseName" component={Invite}/>
+        <Redirect to="/"/>
       </Switch>
     </div>
   ) // when the route is in "/", it will route to Homepage with state of currentUser as props

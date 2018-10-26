@@ -32,6 +32,9 @@ const styles = theme => ({
   title: {
     marginTop: '3.5rem',
     marginBottom: '2.5rem'
+  },
+  typography: {
+    useNextVariants: true
   }
 })
 
@@ -61,6 +64,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         currentPosition: {
@@ -192,7 +196,7 @@ class Home extends Component {
       <div className='container' style={{width: '80%', margin: 'auto'}}>
         <h1 className='title'> Golf Score Keeper </h1>
         {redirectToInvite &&
-        <Redirect to={`/invite/${selectedCourseName}}`}
+        <Redirect to={`/invite/${selectedCourseName}`}
         />}
 
         <PlacesAutocomplete value={this.state.address}

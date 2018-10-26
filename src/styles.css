@@ -9,8 +9,18 @@ body {
   text-align: center;
 }
 
+.invite {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
 @media only screen and (max-width: 800px) {
   .title {
     font-size: 2rem;
+  }
+
+  .invite {
+    font-size: 1rem;
   }
 }
