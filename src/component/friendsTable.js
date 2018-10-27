@@ -37,7 +37,12 @@ const styles = theme => ({
     marginBottom: '2.5rem'
   },
   paper: {
-    margin: '0, auto'
+    width: '100%',
+    marginTop: theme.spacing.unit * 3,
+    overflowX: 'auto'
+  },
+  table: {
+    minWidth: 400
   },
   row: {
     '&:nth-of-type(odd)': {
@@ -65,15 +70,15 @@ const FriendsTable = (props) => {
     <Grid container direction='column' justify='center' alignItems='stretch'>
 
       <Grid item xs={12}>
-        <Paper>
-          <Table className={styles.paper}>
+        <Paper className={styles.paper}>
+          <Table className={styles.table}>
             <colgroup>
-              <col style={{width: '35%'}}/>
-              <col style={{width: '25%'}}/>
-              <col style={{width: '40%'}}/>
+              <col style={{width: '30%'}}/>
+              <col style={{width: '20%'}}/>
+              <col style={{width: '50%'}}/>
             </colgroup>
             <TableHead>
-              <TableRow >
+              <TableRow>
                 <CustomTableCell>Name</CustomTableCell>
                 <CustomTableCell>Average Score</CustomTableCell>
                 <CustomTableCell>Email</CustomTableCell>
