@@ -20,8 +20,7 @@ function getDate() {
   const year = date.getFullYear()
   let month = date.getMonth() + 1
   let dt = date.getDate()
-  let time = date.toLocaleTimeString()
-
+  let time = date.toLocaleTimeString('it-IT')
   if (dt < 10) {
     dt = '0' + dt
   }
@@ -29,13 +28,7 @@ function getDate() {
     month = '0' + month
   }
   let hour = time.substring(0, 2)
-  if (hour < 10) {
-    hour = '0' + hour
-  }
   let min = time.substring(3, 5)
-  if (min < 10) {
-    min = '0' + min
-  }
   return (year + '-' + month + '-' + dt + 'T' + hour + ':' + min)
 }
 
@@ -67,13 +60,7 @@ class Invite extends Component {
   }
 
   componentDidMount() {
-    console.log('reload')
-    fetch(`/courses`, {method: 'GET'})
-      .then(res => res.json())
-      .then(res => console.log(res))
-      .catch(err => {
-        console.error(err)
-      })
+    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
   }
 
   handleClickOpen() {
@@ -89,16 +76,24 @@ class Invite extends Component {
   }
   handleClose(e) {
     e.preventDefault()
-    if (!e.target[0].value) {
+    if (typeof (e.target[0].value) !== 'string') {
+      this.setState({
+        open: false
+      })
+    }
+    else {
       const { players } = this.state
       const playerInfo = {
         name: e.target[0].value,
         avgScore: +e.target[1].value,
         email: e.target[2].value
       }
+      const newPlayer = players.map((player) => {
+        return Object.assign({}, player)
+      })
       this.setState({
         open: false,
-        players: [...players, playerInfo]
+        players: [...newPlayer, playerInfo]
       })
     }
     e.target.reset()
@@ -109,7 +104,6 @@ class Invite extends Component {
     const { classes } = this.props
     const { open, players } = this.state
     const date = getDate()
-    console.log(date)
     return (
       <div className='container' style={{width: '80%', margin: 'auto'}}>
         <h1 className='title'>Invite to Play</h1>
@@ -135,16 +129,14 @@ class Invite extends Component {
           TransitionComponent={Transition}
           keepMounted
           onClose={this.handleClose}
-          aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
-        >
+          aria-labelledby="alert-dialog-slide-title">
           <form onSubmit={this.handleClose}>
             <DialogTitle id="alert-dialog-slide-title">
             Enter Players Info?
             </DialogTitle>
             <DialogContent>
               <DialogContentText>
-              Please Enter Player&aposs Name
+              Please Enter Player Name
               </DialogContentText>
               <TextField
                 autoFocus
@@ -156,7 +148,7 @@ class Invite extends Component {
             </DialogContent>
             <DialogContent>
               <DialogContentText>
-              Please Enter Player&aposs Average Score
+              Please Enter Player Average Score
               </DialogContentText>
               <TextField
                 autoFocus

@@ -1,0 +1,26 @@
+body {
+  background-color: rgb(238, 236, 236);
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.invite {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+@media only screen and (max-width: 800px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .invite {
+    font-size: 1rem;
+  }
+}

@@ -14,7 +14,7 @@ import PlacesAutocomplete, {
   getLatLng
 } from 'react-places-autocomplete'
 import CourseList from '../component/courseList'
-import { withRouter, Redirect } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
@@ -196,8 +196,7 @@ class Home extends Component {
       <div className='container' style={{width: '80%', margin: 'auto'}}>
         <h1 className='title'> Golf Score Keeper </h1>
         {redirectToInvite &&
-        <Redirect to={`/invite/${selectedCourseName}`}
-        />}
+          this.props.history.push(`/invite/${selectedCourseName}`)}
 
         <PlacesAutocomplete value={this.state.address}
           onChange={this.handleChange} onSelect={this.handleSelect} >

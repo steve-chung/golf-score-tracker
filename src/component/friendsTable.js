@@ -37,7 +37,6 @@ const styles = theme => ({
     marginBottom: '2.5rem'
   },
   paper: {
-
     margin: '0, auto'
   },
   row: {
@@ -51,7 +50,7 @@ const styles = theme => ({
 const FriendsTable = (props) => {
   const playerList = props.players.map((player, i) => (
     <TableRow className={styles.row} key={i}>
-      <CustomTableCell component="th" scope="row">
+      <CustomTableCell component='th' scope='row'>
         {player.name}
       </CustomTableCell>
       <CustomTableCell >
@@ -66,12 +65,17 @@ const FriendsTable = (props) => {
     <Grid container direction='column' justify='center' alignItems='stretch'>
 
       <Grid item xs={12}>
-        <Paper className={styles.paper} >
+        <Paper>
           <Table className={styles.paper}>
-            <TableHead className={styles.paper}>
+            <colgroup>
+              <col style={{width: '35%'}}/>
+              <col style={{width: '25%'}}/>
+              <col style={{width: '40%'}}/>
+            </colgroup>
+            <TableHead>
               <TableRow >
                 <CustomTableCell>Name</CustomTableCell>
-                <CustomTableCell numeric>Average Score</CustomTableCell>
+                <CustomTableCell>Average Score</CustomTableCell>
                 <CustomTableCell>Email</CustomTableCell>
               </TableRow>
             </TableHead>

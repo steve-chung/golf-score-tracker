@@ -7,13 +7,8 @@ const Main = props => {
   return (
     <div className="container">
       <Switch>
-        <Route
-          exact path="/"
-          render={props =>
-            <Home/>}
-        />
-        <Route
-          exact path="/invite/:courseName" component={Invite}/>
+        <Route exact path="/" render={props => <Home/>}/>
+        <Route path="/invite/:courseName" component={Invite}/>
         <Redirect to="/"/>
       </Switch>
     </div>

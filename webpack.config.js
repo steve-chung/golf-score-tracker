@@ -34,6 +34,7 @@ module.exports = {
   devServer: {
     open: true,
     stats: 'minimal',
+    historyApiFallback: true,
     port: parseInt(process.env.PORT, 10) + 1,
     contentBase: path.join(__dirname, '/public'),
     proxy: {
