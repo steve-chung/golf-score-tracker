@@ -123,8 +123,12 @@ class FriendsTable extends Component {
       )
     }
     const playerList = players.map((player) => (
-      <TableRow className={classes.row} key={player.Id}>
+      <TableRow className={classes.row}
+        key={player.Id}
+        role='checkbox'
+        onClick={() => this.handleClick(player.Id)}>
         <CustomTableCell component='th' scope='row'>
+          <Checkbox checked={this.state.open[player.Id]} />
           {player.name}
         </CustomTableCell>
         <CustomTableCell >
@@ -142,11 +146,7 @@ class FriendsTable extends Component {
         <div className={classes.list} key={player.Id}>
           <List component='nav' >
             <ListItem button onClick={() => this.handleClick(player.Id)}>
-              <Checkbox
-                checked={this.state.open[player.Id]}
-              // tabIndex={-1}
-              // disableRipple
-              />
+              <Checkbox checked={this.state.open[player.Id]} />
               <ListItemText primary={player.name} />
               {this.state.open[player.Id] ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
