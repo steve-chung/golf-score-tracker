@@ -1,18 +1,39 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import Home from './home'
 import Invite from './invite'
 
-const Main = props => {
-  return (
-    <div className="container">
-      <Switch>
-        <Route exact path="/" render={props => <Home/>}/>
-        <Route path="/invite/:courseName" component={Invite}/>
-        <Redirect to="/"/>
-      </Switch>
-    </div>
-  ) // when the route is in "/", it will route to Homepage with state of currentUser as props
-} // pulling state from the redux store and use it as props at each rendering.
+class Main extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      courseName: ''
+    }
+    this.handleCourseName = this.handleCourseName.bind(this)
+  }
 
-export default withRouter(Main) // exporting with Route and connect to redux store
+  handleCourseName(courseName) {
+    this.setState({
+      courseName
+    })
+  }
+  render() {
+    const { courseName } = this.state
+    return (
+      <div className="container">
+        <Switch>
+          <Route
+            exact path="/"
+            render={() =>
+              <Home handleCourseName={this.handleCourseName}
+              />}/>
+          <Route path="/invite" render={props =>
+            <Invite smallWindows={!window.matchMedia('(min-width: 500px)').matches}
+              courseName = {courseName}/>}/>
+          <Redirect to="/"/>
+        </Switch>
+      </div>
+    )
+  }
+}
+export default withRouter(Main)

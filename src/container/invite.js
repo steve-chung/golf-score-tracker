@@ -52,7 +52,8 @@ class Invite extends Component {
     super(props)
     this.state = {
       open: false,
-      players: []
+      players: [],
+      lastId: 0
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
@@ -61,6 +62,7 @@ class Invite extends Component {
 
   componentDidMount() {
     window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
+
   }
 
   handleClickOpen() {
@@ -82,8 +84,9 @@ class Invite extends Component {
       })
     }
     else {
-      const { players } = this.state
+      const { players, lastId } = this.state
       const playerInfo = {
+        Id: lastId,
         name: e.target[0].value,
         avgScore: +e.target[1].value,
         email: e.target[2].value
@@ -93,15 +96,16 @@ class Invite extends Component {
       })
       this.setState({
         open: false,
-        players: [...newPlayer, playerInfo]
+        players: [...newPlayer, playerInfo],
+        lastId: lastId + 1
       })
     }
     e.target.reset()
   }
 
   render() {
-    const { courseName } = this.props.match.params
-    const { classes } = this.props
+    const { courseName } = this.props
+    const { classes, smallWindows } = this.props
     const { open, players } = this.state
     const date = getDate()
     return (
@@ -123,7 +127,10 @@ class Invite extends Component {
           </form>
         </div>
 
-        <FriendsTable courseName={courseName} players={players}/>
+        <FriendsTable
+          smallWindows={ smallWindows }
+          courseName={ courseName }
+          players={ players }/>
         <Dialog
           open={open}
           TransitionComponent={Transition}

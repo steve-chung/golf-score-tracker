@@ -14,7 +14,7 @@ import PlacesAutocomplete, {
   getLatLng
 } from 'react-places-autocomplete'
 import CourseList from '../component/courseList'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 
 const styles = theme => ({
   container: {
@@ -54,7 +54,8 @@ class Home extends Component {
       courses: null,
       open: false,
       selectedCourseName: '',
-      redirectToInvite: false
+      redirectToInvite: false,
+      smallWindow: false
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
@@ -70,7 +71,8 @@ class Home extends Component {
         currentPosition: {
           lat: position.coords.latitude,
           lng: position.coords.longitude
-        }
+        },
+        smallWindow: !window.matchMedia('(min-width: 500px)').matches
       }, () => {
         const {lat, lng} = this.state.currentPosition
         this.handleCourseApi(lat, lng)
@@ -150,6 +152,7 @@ class Home extends Component {
     const chosenCourse = courses.filter((course) => {
       return course.id === id
     })
+    this.props.handleCourseName(chosenCourse[0].name)
     this.setState({
       open: true,
       selectedCourseName: chosenCourse[0].name
@@ -196,7 +199,7 @@ class Home extends Component {
       <div className='container' style={{width: '80%', margin: 'auto'}}>
         <h1 className='title'> Golf Score Keeper </h1>
         {redirectToInvite &&
-          this.props.history.push(`/invite/${selectedCourseName}`)}
+          this.props.history.push(`/invite`)}
 
         <PlacesAutocomplete value={this.state.address}
           onChange={this.handleChange} onSelect={this.handleSelect} >
@@ -212,8 +215,7 @@ class Home extends Component {
           keepMounted
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-slide-title"
-          aria-describedby="alert-dialog-slide-description"
-        >
+          aria-describedby="alert-dialog-slide-description">
           <DialogTitle id="alert-dialog-slide-title">
             Do you want to play at {selectedCourseName}?
           </DialogTitle>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import {
   Table,
   TableBody,
@@ -6,7 +6,13 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Grid} from '@material-ui/core'
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Collapse
+} from '@material-ui/core'
+import { ExpandLess, ExpandMore } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
 
 const CustomTableCell = withStyles(theme => ({
@@ -48,30 +54,53 @@ const styles = theme => ({
     '&:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.default
     }
+  },
+  nested: {
+    paddingLeft: theme.spacing.unit * 4
+  },
+  list: {
+    backgroundColor: theme.palette.background.paper
   }
-
 })
 
-const FriendsTable = (props) => {
-  const playerList = props.players.map((player, i) => (
-    <TableRow className={styles.row} key={i}>
-      <CustomTableCell component='th' scope='row'>
-        {player.name}
-      </CustomTableCell>
-      <CustomTableCell >
-        {player.avgScore}
-      </CustomTableCell>
-      <CustomTableCell >
-        {player.email}
-      </CustomTableCell>
-    </TableRow>
-  ))
-  return (
-    <Grid container direction='column' justify='center' alignItems='stretch'>
+class FriendsTable extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      open: {}
+    }
+    this.handleClick = this.handleClick.bind(this)
+  }
 
-      <Grid item xs={12}>
-        <Paper className={styles.paper}>
-          <Table className={styles.table}>
+  handleClick(i) {
+    const {open} = this.state
+    let newOpen = {}
+    if (open[i] === undefined) {
+      newOpen = Object.assign(open, {[i]: false})
+    }
+    else {
+      newOpen = Object.assign({}, open)
+    }
+    for (let key in newOpen) {
+      if (+key === i) {
+        newOpen[key] = !newOpen[key]
+      }
+      else {
+        newOpen[key] = false
+      }
+    }
+    this.setState({
+      open: newOpen
+    })
+  }
+
+  render() {
+    const { classes } = this.props
+    const { smallWindows, players } = this.props
+    const displayTable = () => {
+      return (
+        <Paper>
+          <Table>
             <colgroup>
               <col style={{width: '30%'}}/>
               <col style={{width: '20%'}}/>
@@ -89,9 +118,59 @@ const FriendsTable = (props) => {
             </TableBody>
           </Table>
         </Paper>
+      )
+    }
+    const playerList = players.map((player) => (
+      <TableRow className={classes.row} key={player.Id}>
+        <CustomTableCell component='th' scope='row'>
+          {player.name}
+        </CustomTableCell>
+        <CustomTableCell >
+          {player.avgScore}
+        </CustomTableCell>
+        <CustomTableCell >
+          {player.email}
+        </CustomTableCell>
+      </TableRow>
+    ))
+
+    const displayList = players.map((player) => {
+      const {classes} = this.props
+      return (
+        <div className={classes.list} key={player.Id}>
+          <List component='nav' >
+            <ListItem button onClick={() => this.handleClick(player.Id)}>
+              <ListItemText inset primary={player.name} />
+              {this.state.open[player.Id] ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={this.state.open[player.Id]} timeout="auto" unmountOnExit>
+              <List component="div" disablePadding>
+                <ListItem button className={classes.nested}>
+                Average Score: {player.avgScore}
+                </ListItem>
+                <ListItem button className={classes.nested}>
+                Email: {player.email}
+                </ListItem>
+              </List>
+            </Collapse>
+          </List>
+        </div>
+
+      )
+    })
+    return (
+      <Grid container direction='column' justify='center' alignItems='stretch'>
+
+        <Grid item xs={12}>
+          {(smallWindows)
+            ? displayList : displayTable()
+          }
+
+        </Grid>
       </Grid>
-    </Grid>
-  )
+    )
+  }
+
 }
 
 export default withStyles(styles)(FriendsTable)
