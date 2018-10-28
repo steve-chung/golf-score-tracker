@@ -10,7 +10,8 @@ import {
   List,
   ListItem,
   ListItemText,
-  Collapse
+  Collapse,
+  Divider
 } from '@material-ui/core'
 import { ExpandLess, ExpandMore } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
@@ -154,6 +155,8 @@ class FriendsTable extends Component {
               </List>
             </Collapse>
           </List>
+          <Divider/>
+
         </div>
 
       )
