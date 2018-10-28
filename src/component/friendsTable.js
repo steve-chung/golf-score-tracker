@@ -11,7 +11,8 @@ import {
   ListItem,
   ListItemText,
   Collapse,
-  Divider
+  Divider,
+  Checkbox
 } from '@material-ui/core'
 import { ExpandLess, ExpandMore } from '@material-ui/icons'
 import { withStyles } from '@material-ui/core/styles'
@@ -141,7 +142,12 @@ class FriendsTable extends Component {
         <div className={classes.list} key={player.Id}>
           <List component='nav' >
             <ListItem button onClick={() => this.handleClick(player.Id)}>
-              <ListItemText inset primary={player.name} />
+              <Checkbox
+                checked={this.state.open[player.Id]}
+              // tabIndex={-1}
+              // disableRipple
+              />
+              <ListItemText primary={player.name} />
               {this.state.open[player.Id] ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse in={this.state.open[player.Id]} timeout="auto" unmountOnExit>
