@@ -2,13 +2,53 @@
   "courses": [
     {
       "id": 0
+    },
+    {
+      "date": "1540837381091",
+      "name": "UGP",
+      "id": 1
+    },
+    {
+      "date": "1540841702705",
+      "name": "Newport Beach Golf Course",
+      "id": 2
     }
   ],
-  "history": [{
-    "id": 0,
-    "players":[{
-
-    }]
-  }]
-
+  "history": [
+    {
+      "id": 0
+    },
+    {
+      "course": "",
+      "date": 946713600000,
+      "players": [
+        {
+          "id": 1,
+          "name": "steve",
+          "avgScore": 0,
+          "email": ""
+        }
+      ],
+      "id": 1
+    },
+    {
+      "course": "",
+      "date": 946713600000,
+      "players": [
+        {
+          "id": 1,
+          "name": "steve",
+          "avgScore": 0,
+          "email": ""
+        },
+        {
+          "id": 2,
+          "name": "steve",
+          "avgScore": 0,
+          "email": ""
+        }
+      ],
+      "id": 2
+    }
+  ]
 }

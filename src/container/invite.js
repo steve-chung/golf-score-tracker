@@ -57,7 +57,8 @@ class Invite extends Component {
       open: false,
       players: [],
       lastId: 1,
-      deletePlayerId: 0
+      deletePlayerId: 0,
+      scheduledDate: 0
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
@@ -65,6 +66,7 @@ class Invite extends Component {
     this.handleClickDelete = this.handleClickDelete.bind(this)
     this.handleSelectDelete = this.handleSelectDelete.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleDate = this.handleDate.bind(this)
   }
 
   handleClickOpen() {
@@ -95,13 +97,37 @@ class Invite extends Component {
   }
 
   handleSubmit() {
-    const {players} = this.state
-    console.log(players)
-  }
+    const {players, scheduledDate} = this.state
+    const {courseName} = this.props
+    const date = Date.parse(scheduledDate)
+    const newData = {
+      course: courseName,
+      date,
+      players
+    }
 
+    fetch(`/history`, {method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newData)})
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.error(err)
+      })
+  }
   handleCancel(e) {
     this.setState({
       open: false
+    })
+  }
+
+  handleDate(e) {
+    this.setState({
+      scheduledDate: e.target.value
     })
   }
 
@@ -152,6 +178,7 @@ class Invite extends Component {
               InputLabelProps={{
                 shrink: true
               }}
+              onChange={this.handleDate}
             />
           </form>
         </div>
