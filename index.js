@@ -1,6 +1,7 @@
 require('dotenv/config')
 const server = require('json-server')
 const yelp = require('yelp-fusion')
+const path = require('path')
 const app = server.create()
 const middleware = server.defaults()
 const router = server.router('db.json')
@@ -23,6 +24,10 @@ app.get('/api/courses', (req, response, next) => {
       console.log(e)
       next(e)
     })
+})
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'src', 'index.html'))
 })
 
 app.use(router)
