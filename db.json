@@ -12,6 +12,11 @@
       "date": "1540841702705",
       "name": "Newport Beach Golf Course",
       "id": 2
+    },
+    {
+      "date": "1540843152601",
+      "name": "OCPGI Orange County Par Golf Institute",
+      "id": 3
     }
   ],
   "history": [
@@ -75,6 +80,25 @@
         }
       ],
       "id": 4
+    },
+    {
+      "course": "OCPGI Orange County Par Golf Institute",
+      "date": 946713600000,
+      "players": [
+        {
+          "id": 3,
+          "name": "steve",
+          "avgScore": 0,
+          "email": ""
+        },
+        {
+          "id": 4,
+          "name": "steve chung",
+          "avgScore": 0,
+          "email": ""
+        }
+      ],
+      "id": 5
     }
   ]
 }

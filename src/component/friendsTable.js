@@ -151,7 +151,7 @@ class FriendsTable extends Component {
             <ListItem button onClick={() => this.handleClick(player.id)}>
               <Checkbox checked={this.state.open[player.id]} />
               <ListItemText primary={player.name} />
-              {this.state.open[player.Id] ? <ExpandLess /> : <ExpandMore />}
+              {this.state.open[player.id] ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse in={this.state.open[player.id]} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
