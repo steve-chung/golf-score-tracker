@@ -65,7 +65,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
+
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         currentPosition: {
