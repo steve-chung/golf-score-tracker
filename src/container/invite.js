@@ -53,12 +53,14 @@ class Invite extends Component {
     this.state = {
       open: false,
       players: [],
-      lastId: 1
+      lastId: 1,
+      deletePlayerId: 0
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
-    this.handleDelete = this.handleClickDelete.bind(this)
+    this.handleClickDelete = this.handleClickDelete.bind(this)
+    this.handleSelectDelete = this.handleSelectDelete.bind(this)
   }
 
   handleClickOpen() {
@@ -67,8 +69,26 @@ class Invite extends Component {
     })
   }
 
-  handleClickDelete(id) {
-    console.log(id)
+  handleSelectDelete(id) {
+    this.setState({
+      deletePlayerId: id
+    })
+
+  }
+
+  handleClickDelete() {
+    console.log(this.state)
+    const { players, deletePlayerId } = this.state
+    let newPlayers = players.map((player) => {
+      return Object.assign({}, player)
+    })
+    newPlayers = newPlayers.filter((player) => (
+      player.id !== deletePlayerId
+    ))
+    this.setState({
+      players: newPlayers
+    })
+
   }
 
   handleCancel(e) {
@@ -76,6 +96,7 @@ class Invite extends Component {
       open: false
     })
   }
+
   handleClose(e) {
     e.preventDefault()
     if (typeof (e.target[0].value) !== 'string') {
@@ -86,7 +107,7 @@ class Invite extends Component {
     else {
       const { players, lastId } = this.state
       const playerInfo = {
-        Id: lastId,
+        id: lastId,
         name: e.target[0].value,
         avgScore: +e.target[1].value,
         email: e.target[2].value
@@ -107,6 +128,7 @@ class Invite extends Component {
     const { courseName } = this.props
     const { classes, smallWindows } = this.props
     const { open, players } = this.state
+    console.log(this.state)
     const date = getDate()
     return (
       <div className='container' style={{width: '80%', margin: 'auto'}}>
@@ -131,7 +153,7 @@ class Invite extends Component {
           smallWindows={ smallWindows }
           courseName={ courseName }
           players={ players }
-          handleDelete={this.handleClickDelete}/>
+          handleDelete={this.handleSelectDelete}/>
         <Dialog
           open={open}
           TransitionComponent={Transition}

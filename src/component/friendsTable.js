@@ -91,7 +91,7 @@ class FriendsTable extends Component {
         newOpen[key] = false
       }
     }
-    if (open[i] === false) {
+    if (newOpen[i]) {
       this.props.handleDelete(i)
     }
     this.setState({
@@ -127,11 +127,11 @@ class FriendsTable extends Component {
     }
     const playerList = players.map((player) => (
       <TableRow className={classes.row}
-        key={player.Id}
+        key={player.id}
         role='checkbox'
-        onClick={() => this.handleClick(player.Id)}>
+        onClick={() => this.handleClick(player.id)}>
         <CustomTableCell component='th' scope='row'>
-          <Checkbox checked={this.state.open[player.Id]} />
+          <Checkbox checked={this.state.open[player.id]} />
           {player.name}
         </CustomTableCell>
         <CustomTableCell >
@@ -146,14 +146,14 @@ class FriendsTable extends Component {
     const displayList = players.map((player) => {
       const {classes} = this.props
       return (
-        <div className={classes.list} key={player.Id}>
+        <div className={classes.list} key={player.id}>
           <List component='nav' >
-            <ListItem button onClick={() => this.handleClick(player.Id)}>
-              <Checkbox checked={this.state.open[player.Id]} />
+            <ListItem button onClick={() => this.handleClick(player.id)}>
+              <Checkbox checked={this.state.open[player.id]} />
               <ListItemText primary={player.name} />
               {this.state.open[player.Id] ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse in={this.state.open[player.Id]} timeout="auto" unmountOnExit>
+            <Collapse in={this.state.open[player.id]} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItem button className={classes.nested}>
                 Average Score: {player.avgScore}
