@@ -4,7 +4,11 @@ import {AppBar,
   Toolbar,
   Typography,
   IconButton,
-  Drawer
+  Drawer,
+  List,
+  ListItem,
+  Divider,
+  ListItemText
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import { withStyles } from '@material-ui/core/styles'
@@ -19,6 +23,12 @@ const styles = theme => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20
+  },
+  list: {
+    width: 250
+  },
+  fullList: {
+    width: 'auto'
   }
 })
 
@@ -32,15 +42,36 @@ class Navbar extends Component {
   }
 
   handleToggle(e) {
-    console.log(e.target)
     this.setState((prevState) => {
-      return {open: !prevState}
+      console.log(prevState)
+      return {open: !prevState.open}
     })
   }
 
   render() {
     const {classes} = this.props
-
+    console.log(this.state)
+    const list =
+      <div className={classes.list}>
+        <List>
+          <ListItem>
+            <Link to='/'><ListItemText primary={'Home'}/></Link>
+          </ListItem>
+          <Divider/>
+          <ListItem>
+            <Link ><ListItemText primary={'Scores'}/></Link>
+          </ListItem>
+          <Divider/>
+          <ListItem>
+            <Link ><ListItemText primary={'Play Game'}/></Link>
+          </ListItem>
+          <Divider/>
+          <ListItem>
+            <Link ><ListItemText primary={'Performance'}/></Link>
+          </ListItem>
+          <Divider/>
+        </List>
+      </div>
     return (
       <div className={classes.root}>
         <AppBar position="static">
@@ -54,7 +85,7 @@ class Navbar extends Component {
             </IconButton>
             <Drawer open={this.state.open} onClose={this.handleToggle}>
               <div>
-
+                {list}
               </div>
             </Drawer>
             <Typography variant="h6" color="inherit" className={classes.grow}>
