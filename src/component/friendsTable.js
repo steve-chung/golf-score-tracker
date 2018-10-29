@@ -91,6 +91,9 @@ class FriendsTable extends Component {
         newOpen[key] = false
       }
     }
+    if (open[i] === false) {
+      this.props.handleDelete(i)
+    }
     this.setState({
       open: newOpen
     })

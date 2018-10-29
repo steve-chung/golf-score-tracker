@@ -53,22 +53,22 @@ class Invite extends Component {
     this.state = {
       open: false,
       players: [],
-      lastId: 0
+      lastId: 1
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
-  }
-
-  componentDidMount() {
-    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
-
+    this.handleDelete = this.handleClickDelete.bind(this)
   }
 
   handleClickOpen() {
     this.setState({
       open: true
     })
+  }
+
+  handleClickDelete(id) {
+    console.log(id)
   }
 
   handleCancel(e) {
@@ -130,7 +130,8 @@ class Invite extends Component {
         <FriendsTable
           smallWindows={ smallWindows }
           courseName={ courseName }
-          players={ players }/>
+          players={ players }
+          handleDelete={this.handleClickDelete}/>
         <Dialog
           open={open}
           TransitionComponent={Transition}
@@ -187,7 +188,7 @@ class Invite extends Component {
           </form>
         </Dialog>
         <Button className={classes.button} onClick={this.handleClickOpen} color='primary'> Add </Button>
-        <Button className={classes.button} onClick={this.handleClickOpen} color='primary'> Delete </Button>
+        <Button className={classes.button} onClick={this.handleClickDelete} color='primary'> Delete </Button>
       </div>
 
     )
