@@ -187,6 +187,7 @@ class Invite extends Component {
           </form>
         </Dialog>
         <Button className={classes.button} onClick={this.handleClickOpen} color='primary'> Add </Button>
+        <Button className={classes.button} onClick={this.handleClickOpen} color='primary'> Delete </Button>
       </div>
 
     )
