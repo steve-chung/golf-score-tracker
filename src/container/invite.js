@@ -44,6 +44,9 @@ const styles = theme => ({
     display: 'flex',
     marginBottom: 10,
     justifyContent: 'center'
+  },
+  submit: {
+    float: 'none'
   }
 })
 
@@ -53,16 +56,17 @@ class Invite extends Component {
     this.state = {
       open: false,
       players: [],
-      lastId: 0
+      lastId: 1,
+      deletePlayerId: 0,
+      scheduledDate: 0
     }
     this.handleClickOpen = this.handleClickOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
-  }
-
-  componentDidMount() {
-    window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true
-
+    this.handleClickDelete = this.handleClickDelete.bind(this)
+    this.handleSelectDelete = this.handleSelectDelete.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleDate = this.handleDate.bind(this)
   }
 
   handleClickOpen() {
@@ -71,11 +75,68 @@ class Invite extends Component {
     })
   }
 
+  handleSelectDelete(id) {
+    this.setState({
+      deletePlayerId: id
+    })
+
+  }
+
+  handleClickDelete() {
+    const { players, deletePlayerId } = this.state
+    let newPlayers = players.map((player) => {
+      return Object.assign({}, player)
+    })
+    newPlayers = newPlayers.filter((player) => (
+      player.id !== deletePlayerId
+    ))
+    this.setState({
+      players: newPlayers
+    })
+
+  }
+
+  handleSubmit() {
+    const {players, scheduledDate} = this.state
+    const {courseName} = this.props
+    const date = Date.parse(scheduledDate)
+    const newData = {
+      course: courseName,
+      date,
+      players
+    }
+    if (players.length !== 0) {
+      fetch(`/history`, {method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newData)})
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.error(err)
+        })
+
+      this.props.history.push('/')
+    }
+    else {
+      alert('please add players')
+    }
+  }
   handleCancel(e) {
     this.setState({
       open: false
     })
   }
+
+  handleDate(e) {
+    this.setState({
+      scheduledDate: e.target.value
+    })
+  }
+
   handleClose(e) {
     e.preventDefault()
     if (typeof (e.target[0].value) !== 'string') {
@@ -86,7 +147,7 @@ class Invite extends Component {
     else {
       const { players, lastId } = this.state
       const playerInfo = {
-        Id: lastId,
+        id: lastId,
         name: e.target[0].value,
         avgScore: +e.target[1].value,
         email: e.target[2].value
@@ -123,6 +184,7 @@ class Invite extends Component {
               InputLabelProps={{
                 shrink: true
               }}
+              onChange={this.handleDate}
             />
           </form>
         </div>
@@ -130,7 +192,8 @@ class Invite extends Component {
         <FriendsTable
           smallWindows={ smallWindows }
           courseName={ courseName }
-          players={ players }/>
+          players={ players }
+          handleDelete={this.handleSelectDelete}/>
         <Dialog
           open={open}
           TransitionComponent={Transition}
@@ -187,6 +250,10 @@ class Invite extends Component {
           </form>
         </Dialog>
         <Button className={classes.button} onClick={this.handleClickOpen} color='primary'> Add </Button>
+        <Button className={classes.button} onClick={this.handleClickDelete} color='primary'> Delete </Button>
+        <div>
+          <Button className={classes.submit} onClick={this.handleSubmit} color='primary'>Submit</Button>
+        </div>
       </div>
 
     )
