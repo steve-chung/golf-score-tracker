@@ -44,6 +44,9 @@ const styles = theme => ({
     display: 'flex',
     marginBottom: 10,
     justifyContent: 'center'
+  },
+  submit: {
+    float: 'none'
   }
 })
 
@@ -61,6 +64,7 @@ class Invite extends Component {
     this.handleCancel = this.handleCancel.bind(this)
     this.handleClickDelete = this.handleClickDelete.bind(this)
     this.handleSelectDelete = this.handleSelectDelete.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
 
   handleClickOpen() {
@@ -77,7 +81,6 @@ class Invite extends Component {
   }
 
   handleClickDelete() {
-    console.log(this.state)
     const { players, deletePlayerId } = this.state
     let newPlayers = players.map((player) => {
       return Object.assign({}, player)
@@ -89,6 +92,11 @@ class Invite extends Component {
       players: newPlayers
     })
 
+  }
+
+  handleSubmit() {
+    const {players} = this.state
+    console.log(players)
   }
 
   handleCancel(e) {
@@ -128,7 +136,6 @@ class Invite extends Component {
     const { courseName } = this.props
     const { classes, smallWindows } = this.props
     const { open, players } = this.state
-    console.log(this.state)
     const date = getDate()
     return (
       <div className='container' style={{width: '80%', margin: 'auto'}}>
@@ -211,6 +218,9 @@ class Invite extends Component {
         </Dialog>
         <Button className={classes.button} onClick={this.handleClickOpen} color='primary'> Add </Button>
         <Button className={classes.button} onClick={this.handleClickDelete} color='primary'> Delete </Button>
+        <div>
+          <Button className={classes.submit} onClick={this.handleSubmit} color='primary'>Submit</Button>
+        </div>
       </div>
 
     )
