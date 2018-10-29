@@ -26,10 +26,10 @@ class Main extends Component {
             exact path="/"
             render={() =>
               <Home handleCourseName={this.handleCourseName}
-              />}/>
+                {...this.props} />}/>
           <Route path="/invite" render={props =>
             <Invite smallWindows={!window.matchMedia('(min-width: 500px)').matches}
-              courseName = {courseName}/>}/>
+              courseName = {courseName} {...this.props} />}/>
           <Redirect to="/"/>
         </Switch>
       </div>

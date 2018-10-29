@@ -105,19 +105,25 @@ class Invite extends Component {
       date,
       players
     }
+    if (players.length !== 0) {
+      fetch(`/history`, {method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newData)})
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.error(err)
+        })
 
-    fetch(`/history`, {method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newData)})
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => {
-        console.error(err)
-      })
+      this.props.history.push('/')
+    }
+    else {
+      alert('please add players')
+    }
   }
   handleCancel(e) {
     this.setState({
