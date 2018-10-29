@@ -43,14 +43,12 @@ class Navbar extends Component {
 
   handleToggle(e) {
     this.setState((prevState) => {
-      console.log(prevState)
       return {open: !prevState.open}
     })
   }
 
   render() {
     const {classes} = this.props
-    console.log(this.state)
     const list =
       <div className={classes.list}>
         <List>
@@ -59,27 +57,27 @@ class Navbar extends Component {
           </ListItem>
           <Divider/>
           <ListItem>
-            <Link ><ListItemText primary={'Scores'}/></Link>
+            <Link to='/'><ListItemText primary={'Scores'}/></Link>
           </ListItem>
           <Divider/>
           <ListItem>
-            <Link ><ListItemText primary={'Play Game'}/></Link>
+            <Link to='/'><ListItemText primary={'Play Game'}/></Link>
           </ListItem>
           <Divider/>
           <ListItem>
-            <Link ><ListItemText primary={'Performance'}/></Link>
+            <Link to='/'><ListItemText primary={'Performance'}/></Link>
           </ListItem>
           <Divider/>
         </List>
       </div>
     return (
       <div className={classes.root}>
-        <AppBar position="static">
+        <AppBar position='static'>
           <Toolbar>
             <IconButton
               className={classes.menuButton}
-              color="inherit"
-              aria-label="Menu"
+              color='inherit'
+              aria-label='Menu'
               onClick={this.handleToggle}>
               <MenuIcon />
             </IconButton>
@@ -88,7 +86,7 @@ class Navbar extends Component {
                 {list}
               </div>
             </Drawer>
-            <Typography variant="h6" color="inherit" className={classes.grow}>
+            <Typography variant='h6' color='inherit' className={classes.grow}>
               <Link to='/' style={{textDecoration: 'none', color: 'white'}}>
                Golf Score Tracker
               </Link>
