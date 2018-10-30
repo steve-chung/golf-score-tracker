@@ -4,11 +4,7 @@ import {AppBar,
   Toolbar,
   Typography,
   IconButton,
-  Drawer,
-  List,
-  ListItem,
-  Divider,
-  ListItemText
+  Drawer
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import { withStyles } from '@material-ui/core/styles'
@@ -23,12 +19,6 @@ const styles = theme => ({
   menuButton: {
     marginLeft: -12,
     marginRight: 20
-  },
-  list: {
-    width: 250
-  },
-  fullList: {
-    width: 'auto'
   }
 })
 
@@ -42,13 +32,15 @@ class Navbar extends Component {
   }
 
   handleToggle(e) {
+    console.log(e.target)
     this.setState((prevState) => {
-      return {open: !prevState.open}
+      return {open: !prevState}
     })
   }
 
   render() {
     const {classes} = this.props
+
     const list =
       <div className={classes.list}>
         <List>
@@ -70,23 +62,24 @@ class Navbar extends Component {
           <Divider/>
         </List>
       </div>
+
     return (
       <div className={classes.root}>
-        <AppBar position='static'>
+        <AppBar position="static">
           <Toolbar>
             <IconButton
               className={classes.menuButton}
-              color='inherit'
-              aria-label='Menu'
+              color="inherit"
+              aria-label="Menu"
               onClick={this.handleToggle}>
               <MenuIcon />
             </IconButton>
             <Drawer open={this.state.open} onClose={this.handleToggle}>
               <div>
-                {list}
+
               </div>
             </Drawer>
-            <Typography variant='h6' color='inherit' className={classes.grow}>
+            <Typography variant="h6" color="inherit" className={classes.grow}>
               <Link to='/' style={{textDecoration: 'none', color: 'white'}}>
                Golf Score Tracker
               </Link>
