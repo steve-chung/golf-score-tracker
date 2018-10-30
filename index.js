@@ -25,12 +25,13 @@ app.get('/api/courses', (req, response, next) => {
       next(e)
     })
 })
+app.use('/data', router)
+// app.use('/data', router)
 
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'src', 'index.html'))
 })
 
-app.use(router)
 app.use(errorHandler)
 
 app.listen(process.env.PORT, () => {
