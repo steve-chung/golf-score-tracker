@@ -4,7 +4,11 @@ import {AppBar,
   Toolbar,
   Typography,
   IconButton,
-  Drawer
+  Drawer,
+  List,
+  ListItem,
+  Divider,
+  ListItemText
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import { withStyles } from '@material-ui/core/styles'
@@ -32,9 +36,8 @@ class Navbar extends Component {
   }
 
   handleToggle(e) {
-    console.log(e.target)
     this.setState((prevState) => {
-      return {open: !prevState}
+      return {open: !prevState.open}
     })
   }
 
@@ -76,7 +79,7 @@ class Navbar extends Component {
             </IconButton>
             <Drawer open={this.state.open} onClose={this.handleToggle}>
               <div>
-
+                {list}
               </div>
             </Drawer>
             <Typography variant="h6" color="inherit" className={classes.grow}>

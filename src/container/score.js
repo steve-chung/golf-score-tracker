@@ -9,7 +9,7 @@ class Score extends Component {
   }
 
   componentDidMount() {
-    fetch('/history', {method: 'GET'})
+    fetch('/data/history', {method: 'GET'})
       .then(res => res.json())
       .then(res => console.log(res))
       .catch(err => {
