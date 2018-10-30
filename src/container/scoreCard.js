@@ -67,7 +67,6 @@ class scoreCard extends Component {
     const currentPlayer = this.props.currentPlayer ? this.props.currentPlayer : ' '
     const currentHole = this.props.currentHole ? this.props.currentHole : 1
     const currentPar = this.props.currentPar.length !== 0 ? this.props.currentPar : [{ 1: 0 }]
-    console.log(currentPlayer, currentHole, currentPar)
     return (
       <Fragment>
         <CssBaseline />

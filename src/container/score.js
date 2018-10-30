@@ -87,7 +87,6 @@ class Score extends Component {
 
   handleClose(e) {
     e.preventDefault()
-    console.log(e)
     if (typeof (e.target[0].value) !== 'string') {
       this.setState({
         open: false
@@ -142,7 +141,6 @@ class Score extends Component {
     })
   }
   render() {
-    console.log(this.state)
     const { courseName, currentPlayer, currentHole, holes } = this.state
     const currentPar = holes.filter((hole) => (
       currentHole in hole
