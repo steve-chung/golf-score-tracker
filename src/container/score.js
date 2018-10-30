@@ -8,6 +8,7 @@ import {
   Button,
   Slide} from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
+import ScoreCard from '../container/scoreCard'
 
 function Transition(props) {
   return <Slide direction="up" {...props} />
@@ -55,7 +56,9 @@ class Score extends Component {
       players: [],
       courseName: '',
       open: true,
-      holes: []
+      holes: [],
+      currentHole: 1,
+      currentPlayerId: 0
     }
     this.handleClose = this.handleClose.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
@@ -72,7 +75,8 @@ class Score extends Component {
         }
         this.setState({
           players: newPlayers,
-          courseName: res[lastCourse].course
+          courseName: res[lastCourse].course,
+          currentPlayer: res[lastCourse].players[0]
         })
       })
       .catch(err => {
@@ -110,7 +114,10 @@ class Score extends Component {
   }
   render() {
     console.log(this.state)
-    const {courseName} = this.state
+    const { courseName, currentPlayer, currentHole, holes } = this.state
+    const currentPar = holes.filter((hole) => (
+      currentHole in hole
+    ))
     return (
       <div>
         <Dialog
@@ -137,8 +144,9 @@ class Score extends Component {
               </Button>
             </DialogActions>
           </form>
-
         </Dialog>
+        <h1 className='title'>Welcome to {courseName}</h1>
+        <ScoreCard currentPlayer={currentPlayer} currentHole={currentHole} currentPar={currentPar}></ScoreCard>
       </div>
     )
   }
