@@ -41,6 +41,28 @@ class Navbar extends Component {
   render() {
     const {classes} = this.props
 
+    const list =
+      <div className={classes.list}>
+        <List>
+          <ListItem>
+            <Link to='/'><ListItemText primary={'Home'}/></Link>
+          </ListItem>
+          <Divider/>
+          <ListItem>
+            <Link to='/scores'><ListItemText primary={'Scores'}/></Link>
+          </ListItem>
+          <Divider/>
+          <ListItem>
+            <Link to='/'><ListItemText primary={'Play Game'}/></Link>
+          </ListItem>
+          <Divider/>
+          <ListItem>
+            <Link to='/'><ListItemText primary={'Performance'}/></Link>
+          </ListItem>
+          <Divider/>
+        </List>
+      </div>
+
     return (
       <div className={classes.root}>
         <AppBar position="static">
