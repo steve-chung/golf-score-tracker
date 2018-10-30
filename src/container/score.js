@@ -58,10 +58,11 @@ class Score extends Component {
       open: true,
       holes: [],
       currentHole: 1,
-      currentPlayerId: 0
+      currentPlayer: null
     }
     this.handleClose = this.handleClose.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
+    this.handleOnNext = this.handleOnNext.bind(this)
   }
 
   componentDidMount() {
@@ -107,6 +108,34 @@ class Score extends Component {
     e.target.reset()
   }
 
+  handleOnNext(firstClub, firstDistance, secondClub, secondDistance, stroksGreen, totalShots) {
+    const playerScore = {
+      firstClub,
+      firstDistance,
+      secondClub,
+      secondDistance,
+      stroksGreen,
+      totalShots
+    }
+    const {players, currentPlayer} = this.state
+    const newPlayer = players.map((player) => {
+      if (player.id === currentPlayer.id) {
+        return Object.assign(player, playerScore)
+      }
+      else {
+        return player
+      }
+    })
+    const nextPlayerIndex = players.indexOf(currentPlayer) + 1
+    if (nextPlayerIndex < players.length) {
+      this.setState({
+        players: newPlayer,
+        currentPlayer: newPlayer[nextPlayerIndex],
+        open: false
+      })
+    }
+  }
+
   handleCancel(e) {
     this.setState({
       open: false
@@ -119,7 +148,7 @@ class Score extends Component {
       currentHole in hole
     ))
     return (
-      <div>
+      <div className='container' style={{margin: '0, auto'}}>
         <Dialog
           open={this.state.open}
           TransitionComponent={Transition}
@@ -146,7 +175,11 @@ class Score extends Component {
           </form>
         </Dialog>
         <h1 className='title'>Welcome to {courseName}</h1>
-        <ScoreCard currentPlayer={currentPlayer} currentHole={currentHole} currentPar={currentPar}></ScoreCard>
+        <ScoreCard
+          currentPlayer={currentPlayer}
+          currentHole={currentHole}
+          currentPar={currentPar}
+          handleOnNext={this.handleOnNext}/>
       </div>
     )
   }
