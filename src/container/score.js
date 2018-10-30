@@ -54,8 +54,11 @@ class Score extends Component {
     this.state = {
       players: [],
       courseName: '',
-      open: true
+      open: true,
+      holes: []
     }
+    this.handleClose = this.handleClose.bind(this)
+    this.handleCancel = this.handleCancel.bind(this)
   }
 
   componentDidMount() {
@@ -79,26 +82,22 @@ class Score extends Component {
 
   handleClose(e) {
     e.preventDefault()
+    console.log(e)
     if (typeof (e.target[0].value) !== 'string') {
       this.setState({
         open: false
       })
     }
     else {
-      const { players, lastId } = this.state
-      const playerInfo = {
-        id: lastId,
-        name: e.target[0].value,
-        avgScore: +e.target[1].value,
-        email: e.target[2].value
-      }
-      const newPlayer = players.map((player) => {
-        return Object.assign({}, player)
+      let eachHole = {}
+      const newHoles = holes.map((hole, i) => {
+        eachHole = {}
+        eachHole[hole] = +e.target[i].value
+        return eachHole
       })
       this.setState({
         open: false,
-        players: [...newPlayer, playerInfo],
-        lastId: lastId + 1
+        holes: newHoles
       })
     }
     e.target.reset()
@@ -121,20 +120,24 @@ class Score extends Component {
           onClose={this.handleClose}
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description">
-          <DialogTitle id="alert-dialog-slide-title">
+          <form onSubmit = {this.handleClose}>
+            <DialogTitle id="alert-dialog-slide-title">
             Pleaes enter pars for each hole at {courseName}?
-          </DialogTitle>
-          <DialogContent>
-            {holeInput()}
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            </DialogTitle>
+            <DialogContent>
+              {holeInput()}
+            </DialogContent>
+            <DialogActions>
+
+              <Button onClick={this.handleCancel} color="primary">
               Cancel
-            </Button>
-            <Button onClick={this.handleClose} color="primary">
+              </Button>
+              <Button type='submit' color="primary">
               Submit
-            </Button>
-          </DialogActions>
+              </Button>
+            </DialogActions>
+          </form>
+
         </Dialog>
       </div>
     )
