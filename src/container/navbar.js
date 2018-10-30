@@ -52,11 +52,11 @@ class Navbar extends Component {
           </ListItem>
           <Divider/>
           <ListItem>
-            <Link to='/scores'><ListItemText primary={'Scores'}/></Link>
+            <Link to='/'><ListItemText primary={'History'}/></Link>
           </ListItem>
           <Divider/>
           <ListItem>
-            <Link to='/'><ListItemText primary={'Play Game'}/></Link>
+            <Link to='/scores'><ListItemText primary={'Play Game'}/></Link>
           </ListItem>
           <Divider/>
           <ListItem>
