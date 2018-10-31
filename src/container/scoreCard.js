@@ -37,6 +37,12 @@ const styles = theme => ({
   textField: {
     width: 200,
     margin: theme.spacing.unit
+  },
+  next: {
+    float: 'right'
+  },
+  prev: {
+    float: 'left'
   }
 })
 
@@ -48,9 +54,13 @@ class scoreCard extends Component {
   constructor(props) {
     super(props)
     this.handleOnSubmit = this.handleOnSubmit.bind(this)
-
+    this.handlePrev = this.handlePrev.bind(this)
   }
 
+  handlePrev(e) {
+    console.log(e)
+    this.props.handleOnPrev(e)
+  }
   handleOnSubmit(e) {
     e.preventDefault()
     this.props.handleOnNext(e.target[0].value,
@@ -107,7 +117,7 @@ class scoreCard extends Component {
                 label="Distance of second shot"
                 className={classes.textField}
                 InputProps={{
-                  startAdornment: <InputAdornment position='end'>Yard</InputAdornment>
+                  endAdornment: <InputAdornment position='end'>Yard</InputAdornment>
                 }}/>
               <TextField
                 select
@@ -124,7 +134,9 @@ class scoreCard extends Component {
                 required
                 label="Total Number of Shots"
                 className={classes.textField}/>
-              <Button type='submit' color='primary'> Submit </Button>
+              <Button type='submit' className={classes.next} color='primary'> Next</Button>
+              <Button onClick={this.handlePrev} className={classes.prev} color='primary'> Prev </Button>
+
             </form>
 
           </Paper>

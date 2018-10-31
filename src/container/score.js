@@ -42,11 +42,10 @@ function holeInput() {
     let holeLabel = 'Hole ' + hole
     return (<TextField
       key={hole}
-      autoFocus
       margin='dense'
       id='hole'
       label= {holeLabel}
-      fullWidth/>)
+      style={{width: 80}}/>)
   })
 }
 class Score extends Component {
@@ -63,6 +62,7 @@ class Score extends Component {
     this.handleClose = this.handleClose.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
     this.handleOnNext = this.handleOnNext.bind(this)
+    this.handleOnPrev = this.handleOnPrev.bind(this)
   }
 
   componentDidMount() {
@@ -134,7 +134,9 @@ class Score extends Component {
       })
     }
   }
-
+  handleOnPrev(e) {
+    console.log(e)
+  }
   handleCancel(e) {
     this.setState({
       open: false
@@ -177,7 +179,8 @@ class Score extends Component {
           currentPlayer={currentPlayer}
           currentHole={currentHole}
           currentPar={currentPar}
-          handleOnNext={this.handleOnNext}/>
+          handleOnNext={this.handleOnNext}
+          handleOnPrev={this.handleOnPrev}/>
       </div>
     )
   }
