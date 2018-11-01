@@ -118,14 +118,8 @@ class Score extends Component {
 
   handleOnNext(firstClub, firstDistance, secondClub, secondDistance, stroksGreen, totalShots) {
     const { currentHole, players, currentPlayer, holes } = this.state
-    // console.log(holes)
-    // const currentPar = holes.filter(hole => {
-    //   return hole.hasOwnProperty(currentHole)
-    // })
-    // console.log(currentPar)
     const playerScore = {
       hole: currentHole,
-      // par: holes
       firstClub,
       firstDistance,
       secondClub,
@@ -140,26 +134,28 @@ class Score extends Component {
     let playerNow = players.filter(player => (
       player.id === currentPlayer.id))
     let playerNowObj = {}
-    if (!playerNow.hole) {
+    console.log(playerNow, playerNow[0].hole)
+    if (!playerNow[0].hole) {
       playerNow[0].hole = newHole
       console.log(playerNow)
-
       playerNowObj = playerNow[0]
-      console.log(playerNowObj)
-
     }
     else {
       playerNow[0].hole.push(playerScore)
-      playerNowObj = playerNow.values()
+      playerNowObj = playerNow[0]
     }
+    console.log(playerNowObj)
     let updatedPlayers = players.filter(player => (
       player.id !== currentPlayer.id
     ))
     updatedPlayers.push(playerNowObj)
+    console.log(updatedPlayers)
+    const nextHole = holes.indexOf(currentHole) + 1
     if (nextPlayerIndex === players.length) {
+      updatedPlayers = this.handleSortPlayers(updatedPlayers)
       this.setState({
         players: updatedPlayers,
-        currentHole: holes[1],
+        currentHole: holes[nextHole],
         currentPlayer: players[0]
       })
       // newPlayers = this.handleSortPlayers(newPlayers)
@@ -175,23 +171,30 @@ class Score extends Component {
 
   }
 
+  handleSortPlayers(newPlayers) {
+    const lastHole = newPlayers[0].hole.length - 1
+    newPlayers.sort((a, b) => {
+      return a.hole[lastHole].totalShots - b.hole[lastHole].totalShots
+    })
+    return newPlayers
+  }
   handlePutScores(players) {
     const { gameId, courseName, date } = this.state
     console.log('Put')
     console.log(players, players[0].id, gameId)
-    for (let i = 0; i < players.length; i++) {
-      fetch(`/data/games/${gameId}`, {method: 'PUT',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({course: courseName, date: date, players: [players[i]]})})
-        .then(res => res.json())
-        .then(res =>
-          console.log(res))
-        .catch(err =>
-          console.error(err))
-    }
+
+    fetch(`/data/games/${gameId}`, {method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({course: courseName, date: date, players: players})})
+      .then(res => res.json())
+      .then(res =>
+        console.log(res))
+      .catch(err =>
+        console.error(err))
+
   }
 
   handleOnPrev(e) {
