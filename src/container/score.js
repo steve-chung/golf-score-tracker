@@ -52,7 +52,9 @@ class Score extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      players: [],
+      players: [{
+        hole: []
+      }],
       courseName: '',
       open: true,
       holes: [],
@@ -78,7 +80,8 @@ class Score extends Component {
         this.setState({
           players: newPlayers,
           courseName: res[lastCourse].course,
-          currentPlayer: res[lastCourse].players[0]
+          currentPlayer: res[lastCourse].players[0],
+          currentHole: 1
         })
       })
       .catch(err => {
@@ -109,7 +112,9 @@ class Score extends Component {
   }
 
   handleOnNext(firstClub, firstDistance, secondClub, secondDistance, stroksGreen, totalShots) {
+    const { currentHole, players, currentPlayer } = this.state
     const playerScore = {
+      hole: currentHole,
       firstClub,
       firstDistance,
       secondClub,
@@ -117,30 +122,38 @@ class Score extends Component {
       stroksGreen,
       totalShots
     }
-    const {players, currentPlayer} = this.state
-    const newPlayer = players.map((player) => {
-      if (player.id === currentPlayer.id) {
-        return Object.assign(player, playerScore)
-      }
-      else {
-        return player
-      }
-    })
+
+    let newHole = []
+    newHole.push(playerScore)
     const nextPlayerIndex = players.indexOf(currentPlayer) + 1
-    if (nextPlayerIndex < players.length) {
+    let playerNow = players.filter(player => (
+      player.id === currentPlayer.id))
+    if (!playerNow.hole) {
+      playerNow = Object.assign(playerNow, {hole: newHole})
+    }
+    else {
+      playerNow.hole.push(playerScore)
+    }
+    let updatedPlayers = players.filter(player => (
+      player.id !== currentPlayer.id
+    ))
+    updatedPlayers.push(playerNow)
+    if (nextPlayerIndex === players.length) {
       this.setState({
-        players: newPlayer,
-        currentPlayer: newPlayer[nextPlayerIndex],
-        open: false
+        players: updatedPlayers,
+        currentHole: holes[1],
+        currentPlayer: players[0]
+      })
+      // this.handlePostScores()
+      // newPlayers = this.handleSortPlayers(newPlayers)
+
+    }
+    else {
+      this.setState({
+        players: updatedPlayers,
+        currentPlayer: players[nextPlayerIndex]
       })
     }
-    //  else if (nexPlayerIndex === players.length) {
-    //       this.handlePostScores()
-    //       newPlayers = this.handleSortPlayers(newPlayers)
-    // this.setState({
-    //   players:
-    // })
-    // }
   }
   handleOnPrev(e) {
     console.log(e)
