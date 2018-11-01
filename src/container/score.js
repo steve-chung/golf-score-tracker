@@ -134,6 +134,13 @@ class Score extends Component {
         open: false
       })
     }
+    //  else if (nexPlayerIndex === players.length) {
+    //       this.handlePostScores()
+    //       newPlayers = this.handleSortPlayers(newPlayers)
+    // this.setState({
+    //   players:
+    // })
+    // }
   }
   handleOnPrev(e) {
     console.log(e)
@@ -145,6 +152,7 @@ class Score extends Component {
   }
   render() {
     const { courseName, currentPlayer, currentHole, holes } = this.state
+    console.log(this.state)
     const currentPar = holes.filter((hole) => (
       currentHole in hole
     ))

@@ -53,6 +53,12 @@ const strokGreen = [1, 2, 3, 4, 5, 6]
 class scoreCard extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      firstClub: '',
+      secondClub: '',
+      strokGreen: 0
+    }
+    this.handleOnChange = this.handleOnChange.bind(this)
     this.handleOnSubmit = this.handleOnSubmit.bind(this)
     this.handlePrev = this.handlePrev.bind(this)
   }
@@ -69,7 +75,39 @@ class scoreCard extends Component {
       e.target[3].value,
       e.target[4].value,
       e.target[5].value)
+    this.handleRestState()
     e.target.reset()
+  }
+
+  handleRestState() {
+    this.setState({
+      firstClub: '',
+      secondClub: '',
+      strokGreen: 0
+    })
+  }
+
+  componentDidMount() {
+    const {currentPlayer} = this.props
+    if (!currentPlayer) {
+      this.handleRestState()
+    }
+    else {
+      const newFirstClub = currentPlayer.firstClub ? currentPlayer.firstClub : firstClub[0]
+      const newSecondClub = currentPlayer.secondClub ? currentPlayer.secondClub : secondClub[0]
+      const newStrokGreen = currentPlayer.stroksGreen ? currentPlayer.stroksGreen : strokGreen[0]
+      this.setState({
+        firstClub: newFirstClub,
+        secondClub: newSecondClub,
+        strokGreen: newStrokGreen
+      })
+    }
+  }
+
+  handleOnChange(e, name) {
+    this.setState({
+      [name]: e.target.value
+    })
   }
 
   render() {
@@ -88,7 +126,8 @@ class scoreCard extends Component {
               <TextField
                 select
                 className={classes.textField}
-                defaultValue={currentPlayer.firstClub ? currentPlayer.firstClub : firstClub[0]}
+                value={this.state.firstClub}
+                onChange = {(e) => this.handleOnChange(e, 'firstClub')}
                 label='Club at Tee Off'>
                 {firstClub.map((club, i) => (
                   <MenuItem key={i} value={club}>
@@ -106,7 +145,8 @@ class scoreCard extends Component {
               <TextField
                 select
                 className={classes.textField}
-                defaultValue={currentPlayer.secondClub ? currentPlayer.secondClub : secondClub[0]}
+                value={this.state.secondClub}
+                onChange={(e) => this.handleOnChange(e, 'secondClub')}
                 label='Club at Second Shot'>
                 {secondClub.map((club, i) => (
                   <MenuItem key={i} value={club}>
@@ -124,7 +164,8 @@ class scoreCard extends Component {
               <TextField
                 select
                 className={classes.textField}
-                defaultValue={currentPlayer.stroksGreen ? currentPlayer.stroksGreen : strokGreen[0]}
+                value={this.state.strokGreen}
+                onChange = {(e) => this.handleOnChange(e, 'strokGreen')}
                 label='Num of Stroks at Green'>
                 {strokGreen.map((num, i) => (
                   <MenuItem key={num} value={num}>
