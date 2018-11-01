@@ -57,7 +57,8 @@ class Score extends Component {
       open: true,
       holes: [],
       currentHole: 1,
-      currentPlayer: null
+      currentPlayer: null,
+      prevHolePlayers: []
     }
     this.handleClose = this.handleClose.bind(this)
     this.handleCancel = this.handleCancel.bind(this)

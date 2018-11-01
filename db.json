@@ -17,7 +17,6 @@
       "date": "1540843152601",
       "name": "OCPGI Orange County Par Golf Institute",
       "id": 3
-
     },
     {
       "date": "1540851547010",
@@ -110,6 +109,19 @@
         }
       ],
       "id": 5
+    },
+    {
+      "course": "Bryan Park",
+      "date": 946713600000,
+      "players": [
+        {
+          "id": 1,
+          "name": "steve",
+          "avgScore": 0,
+          "email": ""
+        }
+      ],
+      "id": 6
     }
   ]
 }

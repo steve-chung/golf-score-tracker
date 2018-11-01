@@ -106,7 +106,7 @@ class Invite extends Component {
       players
     }
     if (players.length !== 0) {
-      fetch(`/history`, {method: 'POST',
+      fetch(`/data/history`, {method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'

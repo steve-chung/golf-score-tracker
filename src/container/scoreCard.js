@@ -88,7 +88,7 @@ class scoreCard extends Component {
               <TextField
                 select
                 className={classes.textField}
-                value={firstClub[0]}
+                defaultValue={currentPlayer.firstClub ? currentPlayer.firstClub : firstClub[0]}
                 label='Club at Tee Off'>
                 {firstClub.map((club, i) => (
                   <MenuItem key={i} value={club}>
@@ -99,13 +99,14 @@ class scoreCard extends Component {
               <TextField
                 label="Distance of first shot"
                 className={classes.textField}
+                defaultValue={currentPlayer.firstDistance ? currentPlayer.firstDistance : 0}
                 InputProps={{
                   endAdornment: <InputAdornment position='end'>Yard</InputAdornment>
                 }}/>
               <TextField
                 select
                 className={classes.textField}
-                value={secondClub[0]}
+                defaultValue={currentPlayer.secondClub ? currentPlayer.secondClub : secondClub[0]}
                 label='Club at Second Shot'>
                 {secondClub.map((club, i) => (
                   <MenuItem key={i} value={club}>
@@ -115,6 +116,7 @@ class scoreCard extends Component {
               </TextField>
               <TextField
                 label="Distance of second shot"
+                defaultValue={currentPlayer.secondDistance ? currentPlayer.secondDistance : 0}
                 className={classes.textField}
                 InputProps={{
                   endAdornment: <InputAdornment position='end'>Yard</InputAdornment>
@@ -122,7 +124,7 @@ class scoreCard extends Component {
               <TextField
                 select
                 className={classes.textField}
-                value={strokGreen[0]}
+                defaultValue={currentPlayer.stroksGreen ? currentPlayer.stroksGreen : strokGreen[0]}
                 label='Num of Stroks at Green'>
                 {strokGreen.map((num, i) => (
                   <MenuItem key={num} value={num}>
@@ -133,6 +135,7 @@ class scoreCard extends Component {
               <TextField
                 required
                 label="Total Number of Shots"
+                defaultValue={currentPlayer.totalShots ? currentPlayer.totalShots : 0}
                 className={classes.textField}/>
               <Button type='submit' className={classes.next} color='primary'> Next</Button>
               <Button onClick={this.handlePrev} className={classes.prev} color='primary'> Prev </Button>
