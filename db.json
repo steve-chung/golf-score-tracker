@@ -29,7 +29,7 @@
       "id": 5
     }
   ],
-  "history": [
+  "games": [
     {
       "id": 0
     },
@@ -111,14 +111,27 @@
       "id": 5
     },
     {
-      "course": "Bryan Park",
+      "course": "Newport Beach Golf Course",
       "date": 946713600000,
       "players": [
         {
           "id": 1,
           "name": "steve",
           "avgScore": 0,
-          "email": ""
+          "email": "",
+          "hole": [
+            {
+              "hole": {
+                "1": 0
+              },
+              "firstClub": "",
+              "firstDistance": "0",
+              "secondClub": "",
+              "secondDistance": "0",
+              "stroksGreen": "0",
+              "totalShots": "0"
+            }
+          ]
         }
       ],
       "id": 6

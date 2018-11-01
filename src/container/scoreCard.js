@@ -114,14 +114,14 @@ class scoreCard extends Component {
     const { classes } = this.props
     const currentPlayer = this.props.currentPlayer ? this.props.currentPlayer : ' '
     const currentHole = this.props.currentHole ? this.props.currentHole : 1
-    const currentPar = this.props.currentPar.length !== 0 ? this.props.currentPar : [{ 1: 0 }]
+
     return (
       <Fragment>
         <CssBaseline />
         <main className={classes.layout} style={{margin: '0, auto'}}>
           <Paper className={classes.paper} elevation={1}>
             <h2> {currentPlayer.name} play </h2>
-            <h3> Hole {currentHole}/ Par {currentPar[0][currentHole]} </h3>
+            <h3> Hole {Object.keys(currentHole)[0]}/ Par {Object.values(currentHole)} </h3>
             <form onSubmit={this.handleOnSubmit}>
               <TextField
                 select
