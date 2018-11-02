@@ -138,7 +138,8 @@ class Score extends Component {
       playerNow[0].hole = newHole
       playerNowObj = playerNow[0]
     }
-    else {
+    else if (JSON.stringify(playerNow[0].hole[0]) !== JSON.stringify(playerScore)) {
+      console.log(playerNow[0].hole[0], playerScore)
       playerNow[0].hole.push(playerScore)
       playerNowObj = playerNow[0]
     }
@@ -147,6 +148,9 @@ class Score extends Component {
     ))
     updatedPlayers.push(playerNowObj)
     const nextHole = holes.indexOf(currentHole) + 1
+    if (JSON.stringify(playerNow[0].hole[0]) === JSON.stringify(playerScore)) {
+      updatedPlayers = players
+    }
     if (nextPlayerIndex === players.length) {
       this.setState({
         players: updatedPlayers,

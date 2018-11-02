@@ -118,20 +118,7 @@
           "id": 1,
           "name": "steve",
           "avgScore": 0,
-          "email": "",
-          "hole": [
-            {
-              "hole": {
-                "1": 2
-              },
-              "firstClub": "Driver",
-              "firstDistance": "250",
-              "secondClub": "3-wood",
-              "secondDistance": "200",
-              "stroksGreen": "2",
-              "totalShots": "8"
-            }
-          ]
+          "email": ""
         }
       ],
       "id": 6
