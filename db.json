@@ -122,14 +122,14 @@
           "hole": [
             {
               "hole": {
-                "1": 0
+                "1": 2
               },
               "firstClub": "Driver",
-              "firstDistance": "0",
-              "secondClub": "6-iron",
-              "secondDistance": "0",
-              "stroksGreen": "3",
-              "totalShots": "0"
+              "firstDistance": "250",
+              "secondClub": "3-wood",
+              "secondDistance": "200",
+              "stroksGreen": "2",
+              "totalShots": "8"
             }
           ]
         }
