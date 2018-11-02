@@ -116,6 +116,17 @@ class Score extends Component {
     e.target.reset()
   }
 
+  handleUpdatePlayer(playerNowObj, players, currentPlayerId, playerScore, playerNow, holeIndex) {
+    let updatedPlayers = players.filter(player => (
+      player.id !== currentPlayerId
+    ))
+    updatedPlayers.push(playerNowObj)
+    if (JSON.stringify(playerNow[0].hole[holeIndex]) === JSON.stringify(playerScore)) {
+      updatedPlayers = players
+    }
+    return updatedPlayers
+  }
+
   handleOnNext(firstClub, firstDistance, secondClub, secondDistance, stroksGreen, totalShots) {
     const { currentHole, players, currentPlayer, holes } = this.state
     const playerScore = {
@@ -149,14 +160,9 @@ class Score extends Component {
       playerNowObj = playerNow[0]
 
     }
-    let updatedPlayers = players.filter(player => (
-      player.id !== currentPlayer.id
-    ))
-    updatedPlayers.push(playerNowObj)
+    const updatedPlayers = this.handleUpdatePlayer(playerNowObj, players, currentPlayer.id, playerScore, playerNow, holeIndex)
     const nextHole = holes.indexOf(currentHole) + 1
-    if (JSON.stringify(playerNow[0].hole[holeIndex]) === JSON.stringify(playerScore)) {
-      updatedPlayers = players
-    }
+
     if (nextPlayerIndex === players.length) {
       this.setState({
         players: updatedPlayers,
@@ -191,8 +197,8 @@ class Score extends Component {
 
   }
 
-  handleOnPrev() {
-    const {players, currentHole, currentPlayer} = this.state
+  handleOnPrev(e) {
+    const { players, currentHole, currentPlayer } = this.state
     const newHoles = this.state.holes
     let playerIndex = players.indexOf(currentPlayer)
     let holeIndex = newHoles.indexOf(currentHole)
@@ -214,6 +220,7 @@ class Score extends Component {
     else {
       playerIndex = 0
     }
+
     this.setState({
       currentHole: newHoles[holeIndex],
       currentPlayer: players[playerIndex]

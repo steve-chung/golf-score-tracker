@@ -122,25 +122,25 @@
           "hole": [
             {
               "hole": {
-                "1": 0
+                "1": 2
               },
               "firstClub": "Driver",
-              "firstDistance": "0",
-              "secondClub": "3-wood",
-              "secondDistance": "0",
-              "stroksGreen": "1",
-              "totalShots": "0"
+              "firstDistance": "250",
+              "secondClub": "6-iron",
+              "secondDistance": "150",
+              "stroksGreen": "3",
+              "totalShots": "8"
             },
             {
               "hole": {
-                "2": 0
+                "2": 2
               },
               "firstClub": "Driver",
-              "firstDistance": "100",
-              "secondClub": "3-wood",
-              "secondDistance": "0",
-              "stroksGreen": "1",
-              "totalShots": "0"
+              "firstDistance": "250",
+              "secondClub": "6-iron",
+              "secondDistance": "100",
+              "stroksGreen": "3",
+              "totalShots": "8"
             }
           ]
         }
