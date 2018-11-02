@@ -124,22 +124,11 @@
               "hole": {
                 "1": 0
               },
-              "firstClub": "",
+              "firstClub": "Driver",
               "firstDistance": "0",
-              "secondClub": "",
+              "secondClub": "6-iron",
               "secondDistance": "0",
-              "stroksGreen": "0",
-              "totalShots": "0"
-            },
-            {
-              "hole": {
-                "2": 0
-              },
-              "firstClub": "",
-              "firstDistance": "0",
-              "secondClub": "",
-              "secondDistance": "0",
-              "stroksGreen": "0",
+              "stroksGreen": "3",
               "totalShots": "0"
             }
           ]

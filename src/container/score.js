@@ -134,32 +134,25 @@ class Score extends Component {
     let playerNow = players.filter(player => (
       player.id === currentPlayer.id))
     let playerNowObj = {}
-    console.log(playerNow, playerNow[0].hole)
     if (!playerNow[0].hole) {
       playerNow[0].hole = newHole
-      console.log(playerNow)
       playerNowObj = playerNow[0]
     }
     else {
       playerNow[0].hole.push(playerScore)
       playerNowObj = playerNow[0]
     }
-    console.log(playerNowObj)
     let updatedPlayers = players.filter(player => (
       player.id !== currentPlayer.id
     ))
     updatedPlayers.push(playerNowObj)
-    console.log(updatedPlayers)
     const nextHole = holes.indexOf(currentHole) + 1
     if (nextPlayerIndex === players.length) {
-      updatedPlayers = this.handleSortPlayers(updatedPlayers)
       this.setState({
         players: updatedPlayers,
         currentHole: holes[nextHole],
         currentPlayer: players[0]
       })
-      // newPlayers = this.handleSortPlayers(newPlayers)
-
     }
     else {
       this.setState({
@@ -171,17 +164,8 @@ class Score extends Component {
 
   }
 
-  handleSortPlayers(newPlayers) {
-    const lastHole = newPlayers[0].hole.length - 1
-    newPlayers.sort((a, b) => {
-      return a.hole[lastHole].totalShots - b.hole[lastHole].totalShots
-    })
-    return newPlayers
-  }
   handlePutScores(players) {
     const { gameId, courseName, date } = this.state
-    console.log('Put')
-    console.log(players, players[0].id, gameId)
 
     fetch(`/data/games/${gameId}`, {method: 'PUT',
       headers: {
@@ -197,9 +181,35 @@ class Score extends Component {
 
   }
 
-  handleOnPrev(e) {
-    console.log(e)
+  handleOnPrev() {
+    const {players, currentHole, currentPlayer} = this.state
+    const newHoles = this.state.holes
+    let playerIndex = players.indexOf(currentPlayer)
+    let holeIndex = newHoles.indexOf(currentHole)
+    if (!holeIndex) {
+      holeIndex = 0
+    }
+    else {
+      if (!playerIndex) {
+        holeIndex--
+      }
+      else {
+        holeIndex = currentHole
+      }
+    }
+
+    if (playerIndex < 0) {
+      playerIndex--
+    }
+    else {
+      playerIndex = 0
+    }
+    this.setState({
+      currentHole: newHoles[holeIndex],
+      currentPlayer: players[playerIndex]
+    })
   }
+
   handleCancel(e) {
     this.setState({
       open: false
@@ -207,7 +217,6 @@ class Score extends Component {
   }
   render() {
     const { courseName, currentPlayer, currentHole } = this.state
-    console.log(this.state)
     return (
       <div className='container' style={{margin: '0, auto'}}>
         <Dialog
@@ -225,7 +234,6 @@ class Score extends Component {
               {holeInput()}
             </DialogContent>
             <DialogActions>
-
               <Button onClick={this.handleCancel} color="primary">
               Cancel
               </Button>

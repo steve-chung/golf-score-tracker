@@ -48,7 +48,7 @@ const styles = theme => ({
 
 const firstClub = ['Driver', '3-wood', '3-iron', '6-iron', '9-iron']
 const secondClub = ['3-wood', '3-iron', '6-iron', '9-iron', 'PW']
-const strokGreen = [1, 2, 3, 4, 5, 6]
+const stroksGreen = [1, 2, 3, 4, 5, 6]
 
 class scoreCard extends Component {
   constructor(props) {
@@ -56,7 +56,10 @@ class scoreCard extends Component {
     this.state = {
       firstClub: '',
       secondClub: '',
-      strokGreen: 0
+      stroksGreen: 0,
+      firstDistance: 0,
+      secondDistance: 0,
+      totalShots: 0
     }
     this.handleOnChange = this.handleOnChange.bind(this)
     this.handleOnSubmit = this.handleOnSubmit.bind(this)
@@ -64,8 +67,23 @@ class scoreCard extends Component {
   }
 
   handlePrev(e) {
-    console.log(e)
     this.props.handleOnPrev(e)
+    const {currentPlayer} = this.props
+    const { firstClub,
+      secondClub,
+      stroksGreen,
+      firstDistance,
+      secondDistance,
+      totalShots } = currentPlayer.hole[0]
+
+    this.setState({
+      firstClub,
+      secondClub,
+      stroksGreen,
+      firstDistance,
+      secondDistance,
+      totalShots
+    })
   }
   handleOnSubmit(e) {
     e.preventDefault()
@@ -83,7 +101,10 @@ class scoreCard extends Component {
     this.setState({
       firstClub: '',
       secondClub: '',
-      strokGreen: 0
+      stroksGreen: 0,
+      firstDistance: 0,
+      secondDistance: 0,
+      totalShots: 0
     })
   }
 
@@ -91,16 +112,6 @@ class scoreCard extends Component {
     const {currentPlayer} = this.props
     if (!currentPlayer) {
       this.handleRestState()
-    }
-    else {
-      const newFirstClub = currentPlayer.firstClub ? currentPlayer.firstClub : firstClub[0]
-      const newSecondClub = currentPlayer.secondClub ? currentPlayer.secondClub : secondClub[0]
-      const newStrokGreen = currentPlayer.stroksGreen ? currentPlayer.stroksGreen : strokGreen[0]
-      this.setState({
-        firstClub: newFirstClub,
-        secondClub: newSecondClub,
-        strokGreen: newStrokGreen
-      })
     }
   }
 
@@ -112,8 +123,12 @@ class scoreCard extends Component {
 
   render() {
     const { classes } = this.props
-    const currentPlayer = this.props.currentPlayer ? this.props.currentPlayer : ' '
-    const currentHole = this.props.currentHole ? this.props.currentHole : 1
+    let currentPlayer = ' '
+    let currentHole = 1
+    if (this.props.currentPlayer) {
+      currentPlayer = this.props.currentPlayer
+      currentHole = this.props.currentHole
+    }
 
     return (
       <Fragment>
@@ -138,7 +153,8 @@ class scoreCard extends Component {
               <TextField
                 label="Distance of first shot"
                 className={classes.textField}
-                defaultValue={currentPlayer.firstDistance ? currentPlayer.firstDistance : 0}
+                value={this.state.firstDistance}
+                onChange={(e) => this.handleOnChange(e, 'firstDistance')}
                 InputProps={{
                   endAdornment: <InputAdornment position='end'>Yard</InputAdornment>
                 }}/>
@@ -156,7 +172,8 @@ class scoreCard extends Component {
               </TextField>
               <TextField
                 label="Distance of second shot"
-                defaultValue={currentPlayer.secondDistance ? currentPlayer.secondDistance : 0}
+                value={this.state.secondDistance}
+                onChange={(e) => this.handleOnChange(e, 'secondDistance')}
                 className={classes.textField}
                 InputProps={{
                   endAdornment: <InputAdornment position='end'>Yard</InputAdornment>
@@ -164,10 +181,10 @@ class scoreCard extends Component {
               <TextField
                 select
                 className={classes.textField}
-                value={this.state.strokGreen}
-                onChange = {(e) => this.handleOnChange(e, 'strokGreen')}
+                value={+this.state.stroksGreen}
+                onChange = {(e) => this.handleOnChange(e, 'stroksGreen')}
                 label='Num of Stroks at Green'>
-                {strokGreen.map((num, i) => (
+                {stroksGreen.map((num, i) => (
                   <MenuItem key={num} value={num}>
                     {num}
                   </MenuItem>
@@ -176,18 +193,15 @@ class scoreCard extends Component {
               <TextField
                 required
                 label="Total Number of Shots"
-                defaultValue={currentPlayer.totalShots ? currentPlayer.totalShots : 0}
+                value={this.state.totalShots}
+                onChange = {(e) => this.handleOnChange(e, 'totalShots')}
                 className={classes.textField}/>
               <Button type='submit' className={classes.next} color='primary'> Next</Button>
               <Button onClick={this.handlePrev} className={classes.prev} color='primary'> Prev </Button>
-
             </form>
-
           </Paper>
         </main>
-
       </Fragment>
-
     )
   }
 }
