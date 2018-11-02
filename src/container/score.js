@@ -42,31 +42,35 @@ function holeInput() {
     let holeLabel = 'Hole ' + hole
     return (<TextField
       key={hole}
-      autoFocus
       margin='dense'
       id='hole'
       label= {holeLabel}
-      fullWidth/>)
+      style={{width: 80}}/>)
   })
 }
 class Score extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      players: [],
+      players: [{
+        hole: []
+      }],
       courseName: '',
       open: true,
       holes: [],
       currentHole: 1,
-      currentPlayer: null
+      currentPlayer: null,
+      prevHolePlayers: [],
+      gameId: 0
     }
     this.handleClose = this.handleClose.bind(this)
     this.handleCancel = this.handleCancel.bind(this)
     this.handleOnNext = this.handleOnNext.bind(this)
+    this.handleOnPrev = this.handleOnPrev.bind(this)
   }
 
   componentDidMount() {
-    fetch('/data/history', {method: 'GET'})
+    fetch('/data/games', {method: 'GET'})
       .then(res => res.json())
       .then(res => {
         let newPlayers = [ ]
@@ -74,10 +78,14 @@ class Score extends Component {
         for (let i = 0; i < res[lastCourse].players.length; i++) {
           newPlayers.push(res[lastCourse].players[i])
         }
+
         this.setState({
           players: newPlayers,
+          date: res[lastCourse].date,
           courseName: res[lastCourse].course,
-          currentPlayer: res[lastCourse].players[0]
+          currentPlayer: res[lastCourse].players[0],
+          currentHole: 1,
+          gameId: res[lastCourse].id
         })
       })
       .catch(err => {
@@ -101,14 +109,17 @@ class Score extends Component {
       })
       this.setState({
         open: false,
-        holes: newHoles
+        holes: newHoles,
+        currentHole: newHoles[0]
       })
     }
     e.target.reset()
   }
 
   handleOnNext(firstClub, firstDistance, secondClub, secondDistance, stroksGreen, totalShots) {
+    const { currentHole, players, currentPlayer, holes } = this.state
     const playerScore = {
+      hole: currentHole,
       firstClub,
       firstDistance,
       secondClub,
@@ -116,23 +127,87 @@ class Score extends Component {
       stroksGreen,
       totalShots
     }
-    const {players, currentPlayer} = this.state
-    const newPlayer = players.map((player) => {
-      if (player.id === currentPlayer.id) {
-        return Object.assign(player, playerScore)
-      }
-      else {
-        return player
-      }
-    })
+
+    let newHole = []
+    newHole.push(playerScore)
     const nextPlayerIndex = players.indexOf(currentPlayer) + 1
-    if (nextPlayerIndex < players.length) {
+    let playerNow = players.filter(player => (
+      player.id === currentPlayer.id))
+    let playerNowObj = {}
+    if (!playerNow[0].hole) {
+      playerNow[0].hole = newHole
+      playerNowObj = playerNow[0]
+    }
+    else {
+      playerNow[0].hole.push(playerScore)
+      playerNowObj = playerNow[0]
+    }
+    let updatedPlayers = players.filter(player => (
+      player.id !== currentPlayer.id
+    ))
+    updatedPlayers.push(playerNowObj)
+    const nextHole = holes.indexOf(currentHole) + 1
+    if (nextPlayerIndex === players.length) {
       this.setState({
-        players: newPlayer,
-        currentPlayer: newPlayer[nextPlayerIndex],
-        open: false
+        players: updatedPlayers,
+        currentHole: holes[nextHole],
+        currentPlayer: players[0]
       })
     }
+    else {
+      this.setState({
+        players: updatedPlayers,
+        currentPlayer: players[nextPlayerIndex]
+      })
+    }
+    this.handlePutScores(updatedPlayers)
+
+  }
+
+  handlePutScores(players) {
+    const { gameId, courseName, date } = this.state
+
+    fetch(`/data/games/${gameId}`, {method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({course: courseName, date: date, players: players})})
+      .then(res => res.json())
+      .then(res =>
+        console.log(res))
+      .catch(err =>
+        console.error(err))
+
+  }
+
+  handleOnPrev() {
+    const {players, currentHole, currentPlayer} = this.state
+    const newHoles = this.state.holes
+    let playerIndex = players.indexOf(currentPlayer)
+    let holeIndex = newHoles.indexOf(currentHole)
+    if (!holeIndex) {
+      holeIndex = 0
+    }
+    else {
+      if (!playerIndex) {
+        holeIndex--
+      }
+      else {
+        holeIndex = currentHole
+      }
+    }
+
+    if (playerIndex < 0) {
+      playerIndex--
+    }
+    else {
+      playerIndex = 0
+    }
+    this.setState({
+      currentHole: newHoles[holeIndex],
+      currentPlayer: players[playerIndex]
+    })
   }
 
   handleCancel(e) {
@@ -141,10 +216,7 @@ class Score extends Component {
     })
   }
   render() {
-    const { courseName, currentPlayer, currentHole, holes } = this.state
-    const currentPar = holes.filter((hole) => (
-      currentHole in hole
-    ))
+    const { courseName, currentPlayer, currentHole } = this.state
     return (
       <div className='container' style={{margin: '0, auto'}}>
         <Dialog
@@ -162,7 +234,6 @@ class Score extends Component {
               {holeInput()}
             </DialogContent>
             <DialogActions>
-
               <Button onClick={this.handleCancel} color="primary">
               Cancel
               </Button>
@@ -176,8 +247,8 @@ class Score extends Component {
         <ScoreCard
           currentPlayer={currentPlayer}
           currentHole={currentHole}
-          currentPar={currentPar}
-          handleOnNext={this.handleOnNext}/>
+          handleOnNext={this.handleOnNext}
+          handleOnPrev={this.handleOnPrev}/>
       </div>
     )
   }

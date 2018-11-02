@@ -17,7 +17,6 @@
       "date": "1540843152601",
       "name": "OCPGI Orange County Par Golf Institute",
       "id": 3
-
     },
     {
       "date": "1540851547010",
@@ -30,7 +29,7 @@
       "id": 5
     }
   ],
-  "history": [
+  "games": [
     {
       "id": 0
     },
@@ -110,6 +109,32 @@
         }
       ],
       "id": 5
+    },
+    {
+      "course": "Newport Beach Golf Course",
+      "date": 946713600000,
+      "players": [
+        {
+          "id": 1,
+          "name": "steve",
+          "avgScore": 0,
+          "email": "",
+          "hole": [
+            {
+              "hole": {
+                "1": 2
+              },
+              "firstClub": "Driver",
+              "firstDistance": "250",
+              "secondClub": "3-wood",
+              "secondDistance": "200",
+              "stroksGreen": "2",
+              "totalShots": "8"
+            }
+          ]
+        }
+      ],
+      "id": 6
     }
   ]
 }
