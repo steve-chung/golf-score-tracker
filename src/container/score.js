@@ -127,7 +127,7 @@ class Score extends Component {
       stroksGreen,
       totalShots
     }
-
+    const holeIndex = Object.keys(playerScore.hole)[0] - 1
     let newHole = []
     newHole.push(playerScore)
     const nextPlayerIndex = players.indexOf(currentPlayer) + 1
@@ -138,17 +138,23 @@ class Score extends Component {
       playerNow[0].hole = newHole
       playerNowObj = playerNow[0]
     }
-    else if (JSON.stringify(playerNow[0].hole[0]) !== JSON.stringify(playerScore)) {
-      console.log(playerNow[0].hole[0], playerScore)
-      playerNow[0].hole.push(playerScore)
+    else if (JSON.stringify(playerNow[0].hole[holeIndex]) !== JSON.stringify(playerScore)) {
+      console.log(playerNow[0].hole[holeIndex], playerScore)
+      if (JSON.stringify(playerNow[0].hole[holeIndex]) === undefined) {
+        playerNow[0].hole.push(playerScore)
+      }
+      else {
+        playerNow[0].hole[holeIndex] = playerScore
+      }
       playerNowObj = playerNow[0]
+
     }
     let updatedPlayers = players.filter(player => (
       player.id !== currentPlayer.id
     ))
     updatedPlayers.push(playerNowObj)
     const nextHole = holes.indexOf(currentHole) + 1
-    if (JSON.stringify(playerNow[0].hole[0]) === JSON.stringify(playerScore)) {
+    if (JSON.stringify(playerNow[0].hole[holeIndex]) === JSON.stringify(playerScore)) {
       updatedPlayers = players
     }
     if (nextPlayerIndex === players.length) {

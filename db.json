@@ -118,7 +118,31 @@
           "id": 1,
           "name": "steve",
           "avgScore": 0,
-          "email": ""
+          "email": "",
+          "hole": [
+            {
+              "hole": {
+                "1": 0
+              },
+              "firstClub": "Driver",
+              "firstDistance": "0",
+              "secondClub": "3-wood",
+              "secondDistance": "0",
+              "stroksGreen": "1",
+              "totalShots": "0"
+            },
+            {
+              "hole": {
+                "2": 0
+              },
+              "firstClub": "Driver",
+              "firstDistance": "100",
+              "secondClub": "3-wood",
+              "secondDistance": "0",
+              "stroksGreen": "1",
+              "totalShots": "0"
+            }
+          ]
         }
       ],
       "id": 6
