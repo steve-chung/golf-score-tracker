@@ -31,67 +31,6 @@
   ],
   "games": [
     {
-      "id": 0
-    },
-    {
-      "course": "",
-      "date": 946713600000,
-      "players": [
-        {
-          "id": 1,
-          "name": "steve",
-          "avgScore": 0,
-          "email": ""
-        }
-      ],
-      "id": 1
-    },
-    {
-      "course": "",
-      "date": 946713600000,
-      "players": [
-        {
-          "id": 1,
-          "name": "steve",
-          "avgScore": 0,
-          "email": ""
-        },
-        {
-          "id": 2,
-          "name": "steve",
-          "avgScore": 0,
-          "email": ""
-        }
-      ],
-      "id": 2
-    },
-    {
-      "course": "",
-      "date": 946713600000,
-      "players": [
-        {
-          "id": 1,
-          "name": "steve",
-          "avgScore": 0,
-          "email": ""
-        }
-      ],
-      "id": 3
-    },
-    {
-      "course": "",
-      "date": 946713600000,
-      "players": [
-        {
-          "id": 1,
-          "name": "steve",
-          "avgScore": 0,
-          "email": ""
-        }
-      ],
-      "id": 4
-    },
-    {
       "course": "OCPGI Orange County Par Golf Institute",
       "date": 946713600000,
       "players": [
@@ -136,20 +75,7 @@
           "totalScore": 7
         }
       ],
-      "id": 5
-    },
-    {
-      "course": "Dad Miller Golf Course",
-      "date": 946713600000,
-      "players": [
-        {
-          "id": 1,
-          "name": "steve",
-          "avgScore": 0,
-          "email": ""
-        }
-      ],
-      "id": 6
+      "id": 1
     },
     {
       "course": "Los Coyotes Country Club",
@@ -159,8 +85,35 @@
           "id": 1,
           "name": "steve",
           "avgScore": 0,
-          "email": ""
+          "email": "",
+          "hole": [
+            {
+              "hole": {
+                "1": 0
+              },
+              "firstClub": "Driver",
+              "firstDistance": "250",
+              "secondClub": "3-wood",
+              "secondDistance": "200",
+              "stroksGreen": "3",
+              "totalShots": "8"
+            },
+            {
+              "hole": {
+                "2": 0
+              },
+              "firstClub": "Driver",
+              "firstDistance": "260",
+              "secondClub": "6-iron",
+              "secondDistance": "150",
+              "stroksGreen": "2",
+              "totalShots": "6"
+            }
+          ],
+          "totalScore": 14
         }
+      ],
+      "id": 2
+    }
   ]
-}]
 }
