@@ -76,44 +76,6 @@
         }
       ],
       "id": 1
-    },
-    {
-      "course": "Los Coyotes Country Club",
-      "date": 946713600000,
-      "players": [
-        {
-          "id": 1,
-          "name": "steve",
-          "avgScore": 0,
-          "email": "",
-          "hole": [
-            {
-              "hole": {
-                "1": 0
-              },
-              "firstClub": "Driver",
-              "firstDistance": "250",
-              "secondClub": "3-wood",
-              "secondDistance": "200",
-              "stroksGreen": "3",
-              "totalShots": "8"
-            },
-            {
-              "hole": {
-                "2": 0
-              },
-              "firstClub": "Driver",
-              "firstDistance": "260",
-              "secondClub": "6-iron",
-              "secondDistance": "150",
-              "stroksGreen": "2",
-              "totalShots": "6"
-            }
-          ],
-          "totalScore": 14
-        }
-      ],
-      "id": 2
     }
   ]
 }
