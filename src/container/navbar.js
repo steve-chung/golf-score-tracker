@@ -52,7 +52,7 @@ class Navbar extends Component {
           </ListItem>
           <Divider/>
           <ListItem>
-            <Link to='/'><ListItemText primary={'History'}/></Link>
+            <Link to='/history'><ListItemText primary={'History'}/></Link>
           </ListItem>
           <Divider/>
           <ListItem>

@@ -3,6 +3,7 @@ import { Switch, Route, withRouter, Redirect } from 'react-router-dom'
 import Home from './home'
 import Invite from './invite'
 import Scores from './score'
+import History from './history'
 
 class Main extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class Main extends Component {
             <Invite smallWindows={!window.matchMedia('(min-width: 500px)').matches}
               courseName = {courseName} {...this.props} />}/>
           <Route path='/scores' component={Scores}/>
+          <Route path='/history' component={History}/>
           <Redirect to="/"/>
         </Switch>
       </div>

@@ -98,6 +98,7 @@ class Invite extends Component {
 
   handleSubmit() {
     const {players, scheduledDate} = this.state
+
     const {courseName} = this.props
     const date = Date.parse(scheduledDate)
     const newData = {
@@ -132,8 +133,10 @@ class Invite extends Component {
   }
 
   handleDate(e) {
+    const date = e.target.value + ':00'
+    console.log(date)
     this.setState({
-      scheduledDate: e.target.value
+      scheduledDate: date
     })
   }
 

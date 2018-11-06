@@ -65,7 +65,6 @@ class Home extends Component {
   }
 
   componentDidMount() {
-
     navigator.geolocation.getCurrentPosition(position => {
       this.setState({
         currentPosition: {
@@ -80,7 +79,7 @@ class Home extends Component {
     }, (err) => {
       console.error(err)
     },
-    {timeout: 10000})
+    {timeout: 30000})
   }
 
   handleChange(e) {

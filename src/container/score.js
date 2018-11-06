@@ -147,19 +147,22 @@ class Score extends Component {
     let playerNowObj = {}
     if (!playerNow[0].hole) {
       playerNow[0].hole = newHole
+      playerNow[0].totalScore = +playerScore.totalShots
       playerNowObj = playerNow[0]
     }
     else if (JSON.stringify(playerNow[0].hole[holeIndex]) !== JSON.stringify(playerScore)) {
-      console.log(playerNow[0].hole[holeIndex], playerScore)
       if (JSON.stringify(playerNow[0].hole[holeIndex]) === undefined) {
         playerNow[0].hole.push(playerScore)
+        console.log(playerNow[0].totalScore)
+        playerNow[0].totalScore += +playerScore.totalShots
       }
       else {
         playerNow[0].hole[holeIndex] = playerScore
+        playerNow[0].totalScore += +playerScore.totalShots
       }
       playerNowObj = playerNow[0]
-
     }
+    console.log(playerNowObj)
     const updatedPlayers = this.handleUpdatePlayer(playerNowObj, players, currentPlayer.id, playerScore, playerNow, holeIndex)
     const nextHole = holes.indexOf(currentHole) + 1
 
