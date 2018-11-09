@@ -1,4 +1,4 @@
 #!/bin/bash
 cd /tmp
 
-npm install
+npm install -production
