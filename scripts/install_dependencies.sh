@@ -1,4 +1,4 @@
 #!/bin/bash
-cd /tmp
+cd /home/ec2-user/project
 
 npm install -production
