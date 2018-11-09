@@ -5,4 +5,4 @@ yum install -y gcc-c++ make
 yum install -y nodejs npm
 
 npm install -g pm2
-npm installnpm install
+npm install
