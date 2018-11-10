@@ -2,12 +2,18 @@
   "name": "golf-score-tracker",
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "10.0.0"
+  },
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "build": "webpack",
     "dev": "webpack-dev-server --history-api-fallback",
-    "watch": "npm-run-all --parallel start dev"
+    "watch": "npm-run-all --parallel start dev",
+    "postinstall": "webpack -p --config ./webpack.config.js --progress",
+    "heroku-prebuild": "echo This runs before Heroku installs your dependencies.",
+    "heroku-postbuild": "webpack -p"
   },
   "keywords": [],
   "author": "",
