@@ -60,7 +60,7 @@ class Navbar extends Component {
           </ListItem>
           <Divider/>
           <ListItem>
-            <Link to='/'><ListItemText primary={'Performance'}/></Link>
+            <Link to='/performance'><ListItemText primary={'Performance'}/></Link>
           </ListItem>
           <Divider/>
         </List>
