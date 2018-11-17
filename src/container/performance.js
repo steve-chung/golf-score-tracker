@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 
 class Performance extends Component {
-  // constructor(props) {
-  //   super(props)
-  // }
+  constructor(props) {
+    super(props)
+    this.state = {
+
+    }
+  }
 
   componentDidMount() {
     const date = Date.now()
@@ -45,18 +48,38 @@ class Performance extends Component {
               scoreStats: scoreStat})
           return courseObj
         })
-
-        console.log(history)
-
-      //   this.setState({
-      //     history
-      //   })
+        this.averageData(history)
       })
       .catch(err => {
         console.error(err)
       })
   }
+
+  averageData(golfStat) {
+
+    const finalStat = golfStat.map(stat => {
+      let date = new Date(stat.date)
+      let averageStat = {}
+      for (let key in stat.scoreStats) {
+        if (key === 'puttsGreen') {
+          averageStat.puttsGreen = (stat.scoreStats[key] / 18).toFixed(2)
+        }
+        else if (key !== 'count') {
+          averageStat[key] = (stat.scoreStats[key] / stat.scoreStats.count[key]).toFixed(2)
+        }
+      }
+      return Object.assign({}, {
+        date: date.toDateString(),
+        playerName: stat.playerName,
+        totalScore: stat.scores,
+        averageStat: averageStat})
+    })
+    this.setState({
+      finalStat
+    })
+  }
   render() {
+    console.log(this.state)
     return (
       <div>
        Performance
