@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-
+import { Paper } from '@material-ui/core'
+import Graph from '../component/graph'
 class Performance extends Component {
   constructor(props) {
     super(props)
@@ -81,9 +82,15 @@ class Performance extends Component {
   render() {
     console.log(this.state)
     return (
-      <div>
-       Performance
-      </div>
+      <Paper>
+        <h1 style={{textAlign: 'center'}}>
+          Performance
+        </h1>
+        <Graph style={{margin: 'auto'}}>
+
+        </Graph>
+      </Paper>
+
     )
   }
 }
