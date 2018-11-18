@@ -1,11 +1,33 @@
 import React, { Component } from 'react'
 import { Paper } from '@material-ui/core'
-import Graph from '../component/graph'
+import BarChart from '../component/graph'
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = theme => ({
+  layout: {
+    width: 'auto',
+    display: 'block',
+    marginLeft: theme.spacing.unit * 3,
+    marginRight: theme.spacing.unit * 3,
+    [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
+      width: 800,
+      marginLeft: 'auto',
+      marginRight: 'auto'
+    }
+  },
+  paper: {
+    marginTop: theme.spacing.unit * 8,
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`
+  }
+})
+
 class Performance extends Component {
   constructor(props) {
     super(props)
     this.state = {
-
     }
   }
 
@@ -50,6 +72,7 @@ class Performance extends Component {
           return courseObj
         })
         this.averageData(history)
+        console.log(history)
       })
       .catch(err => {
         console.error(err)
@@ -75,24 +98,30 @@ class Performance extends Component {
         totalScore: stat.scores,
         averageStat: averageStat})
     })
+    console.log(finalStat)
     this.setState({
       finalStat
     })
   }
   render() {
     console.log(this.state)
+    const { classes } = this.props
     return (
-      <Paper>
-        <h1 style={{textAlign: 'center'}}>
+      <main className={classes.layout} style={{margin: '0, auto'}}>
+        <Paper className={classes.paper} elevation={1}>
+          <h2 style={{textAlign: 'center'}}>
           Performance
-        </h1>
-        <Graph style={{margin: 'auto'}}>
+          </h2>
+          { this.state.finalStat && <BarChart size={[600, 500]}
+            style={{margin: 'auto'}}
+            data = {this.state}>
+          </BarChart> }
+        </Paper>
 
-        </Graph>
-      </Paper>
+      </main>
 
     )
   }
 }
 
-export default Performance
+export default withStyles(styles)(Performance)
