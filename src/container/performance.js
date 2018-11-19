@@ -75,7 +75,6 @@ class Performance extends Component {
           return courseObj
         })
         this.averageData(history)
-        console.log(history)
       })
       .catch(err => {
         console.error(err)
@@ -107,12 +106,10 @@ class Performance extends Component {
   }
 
   handleChange(event, value) {
-    console.log(value)
     this.setState({ value })
   }
 
   render() {
-    console.log(this.state)
     const { classes } = this.props
     const { value } = this.state
     return (

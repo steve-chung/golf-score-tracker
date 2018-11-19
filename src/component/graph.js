@@ -15,9 +15,7 @@ class BarChart extends Component {
   }
 
   createBar() {
-    console.log(this.props)
     const { category } = this.props
-    console.log(category)
     const node = this.node
     const margin = 20
     const height = this.props.size[1] - 2 * margin
@@ -45,7 +43,6 @@ class BarChart extends Component {
     else {
       dataMax = Math.max.apply(null, this.props.data.finalStat.map(stat => stat.averageStat[category]))
     }
-    console.log(dataMax)
     const padding = 45
     const yScale = d3.scaleLinear()
       .domain([0, dataMax])
