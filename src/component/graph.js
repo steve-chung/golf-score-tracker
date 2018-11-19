@@ -53,6 +53,7 @@ class BarChart extends Component {
 
     svg.append('g')
       .attr('transform', `translate(${padding}, 0)`)
+      .attr('fill', 'white')
       .call(d3.axisLeft(yScale))
 
     const makeYlines = () => d3.axisLeft()
@@ -65,10 +66,12 @@ class BarChart extends Component {
 
     svg.append('g')
       .attr('transform', `translate(0, ${height})`)
+      .attr('fill', 'white')
       .call(d3.axisBottom(xScale))
 
     svg.append('g')
       .attr('class', 'grid')
+      .attr('fill', 'white')
       .attr('transform', `translate(${padding}, 0)`)
       .call(makeYlines()
         .tickSize(-width, 0, 0)
@@ -125,7 +128,7 @@ class BarChart extends Component {
           .attr('y', d => {
             return category === 'totalScore' ? yScale(d.totalScore) + 30 : yScale(d.averageStat[category]) + 30
           })
-          .attr('fill', 'white')
+          .attr('fill', '#2F4A6D')
           .attr('text-anchor', 'middle')
           .text((d, idx) => {
             const divergence = category === 'totalScore' ? (d.totalScore - actual).toFixed(1) : (d.averageStat[category] - actual).toFixed(1)
@@ -175,10 +178,12 @@ class BarChart extends Component {
       .attr('y', margin / 1.9)
       .attr('transform', 'rotate(-90)')
       .attr('text-anchor', 'middle')
+      .attr('fill', 'white')
       .text(yAxisLabel)
 
     svg
       .append('text')
+      .attr('fill', 'white')
       .attr('class', 'chartTitle')
       .attr('x', width / 2 + margin)
       .attr('y', 18)

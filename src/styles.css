@@ -24,6 +24,42 @@ svg {
   height: 500px;
 }
 
+path {
+  stroke: gray;
+}
+
+line#limit {
+  stroke: #fed966;
+  stroke-width: 3;
+  stroke-dasharray: 3 6;
+}
+
+.grid path {
+  stroke-width: 0;
+}
+
+text.divergence {
+  font-size: 14px;
+}
+
+text.value {
+  font-size: 14px;
+}
+
+.grid .tick line {
+  stroke: #9faaae;
+  stroke-opacity: 0.3;
+}
+
+.bar {
+  fill: #80cbc4;
+}
+
+text {
+  font-size: 12px;
+  fill: #fff;
+}
+
 @media only screen and (max-width: 800px) {
   .title {
     font-size: 2rem;
