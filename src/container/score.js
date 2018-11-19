@@ -153,7 +153,6 @@ class Score extends Component {
     else if (JSON.stringify(playerNow[0].hole[holeIndex]) !== JSON.stringify(playerScore)) {
       if (JSON.stringify(playerNow[0].hole[holeIndex]) === undefined) {
         playerNow[0].hole.push(playerScore)
-        console.log(playerNow[0].totalScore)
         playerNow[0].totalScore += +playerScore.totalShots
       }
       else {
@@ -162,7 +161,6 @@ class Score extends Component {
       }
       playerNowObj = playerNow[0]
     }
-    console.log(playerNowObj)
     const updatedPlayers = this.handleUpdatePlayer(playerNowObj, players, currentPlayer.id, playerScore, playerNow, holeIndex)
     const nextHole = holes.indexOf(currentHole) + 1
 
@@ -172,6 +170,9 @@ class Score extends Component {
         currentHole: holes[nextHole],
         currentPlayer: players[0]
       })
+      if (nextHole === 18) {
+        this.props.history.push('/')
+      }
     }
     else {
       this.setState({
@@ -180,7 +181,6 @@ class Score extends Component {
       })
     }
     this.handlePutScores(updatedPlayers)
-
   }
 
   handlePutScores(players) {

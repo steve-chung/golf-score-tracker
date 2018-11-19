@@ -4,6 +4,7 @@ import Home from './home'
 import Invite from './invite'
 import Scores from './score'
 import History from './history'
+import Performance from './performance'
 
 class Main extends Component {
   constructor(props) {
@@ -34,6 +35,7 @@ class Main extends Component {
               courseName = {courseName} {...this.props} />}/>
           <Route path='/scores' component={Scores}/>
           <Route path='/history' component={History}/>
+          <Route path='/performance' component={Performance}/>
           <Redirect to="/"/>
         </Switch>
       </div>
