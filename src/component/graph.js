@@ -16,17 +16,36 @@ class BarChart extends Component {
 
   createBar() {
     console.log(this.props)
+    const { category } = this.props
+    console.log(category)
     const node = this.node
     const margin = 20
-    const dataMax = Math.max.apply(null, this.props.data.finalStat.map(stat => stat.totalScore))
-    console.log(dataMax)
     const height = this.props.size[1] - 2 * margin
     const width = this.props.size[0] - 2 * margin
+    let yAxisLabel = ' '
 
+    switch (category) {
+      case 'totalScore':
+        yAxisLabel = 'Score'
+        break
+      case 'puttsGreen':
+        yAxisLabel = 'Putts'
+        break
+      default:
+        yAxisLabel = 'Yards'
+        break
+    }
     const svg = d3.select(node)
       .attr('transform', `translate(${margin}, ${margin})`)
-
     const data = this.props.data.finalStat
+    let dataMax = 0
+    if (category === 'totalScore') {
+      dataMax = Math.max.apply(null, this.props.data.finalStat.map(stat => stat.totalScore))
+    }
+    else {
+      dataMax = Math.max.apply(null, this.props.data.finalStat.map(stat => stat.averageStat[category]))
+    }
+    console.log(dataMax)
     const padding = 45
     const yScale = d3.scaleLinear()
       .domain([0, dataMax])
@@ -71,8 +90,12 @@ class BarChart extends Component {
       .attr('width', xScale.bandwidth() + 5)
       .transition(t)
       .delay((d, i) => i * 100)
-      .attr('y', d => yScale(d.totalScore))
-      .attr('height', d => height - yScale(d.totalScore))
+      .attr('y', d => {
+        return category === 'totalScore' ? yScale(d.totalScore) : yScale(d.averageStat[category])
+      })
+      .attr('height', d => {
+        return category === 'totalScore' ? height - yScale(d.totalScore) : height - yScale(d.averageStat[category])
+      })
 
     bar
       .on('mouseenter', function (actual, i) {
@@ -99,11 +122,13 @@ class BarChart extends Component {
         bar.append('text')
           .attr('class', 'divergence')
           .attr('x', (d, n) => xScale(n + 1) + xScale.bandwidth() / 2)
-          .attr('y', d => yScale(d.totalScore) + 30)
+          .attr('y', d => {
+            return category === 'totalScore' ? yScale(d.totalScore) + 30 : yScale(d.averageStat[category]) + 30
+          })
           .attr('fill', 'white')
           .attr('text-anchor', 'middle')
           .text((d, idx) => {
-            const divergence = (d.totalScore - actual).toFixed(1)
+            const divergence = category === 'totalScore' ? (d.totalScore - actual).toFixed(1) : (d.averageStat[category] - actual).toFixed(1)
 
             let text = ''
             if (divergence > 0) {
@@ -134,10 +159,14 @@ class BarChart extends Component {
       .append('text')
       .attr('class', 'value')
       .attr('x', (d) => xScale(d.date) + xScale.bandwidth() / 2)
-      .attr('y', d => yScale(d.totalScore) + 30)
+      .attr('y', d => {
+        return category === 'totalScore' ? yScale(d.totalScore) + 30 : yScale(d.averageStat[category]) + 30
+      })
       .attr('fill', 'white')
       .attr('text-anchor', 'middle')
-      .text(d => d.totalScore)
+      .text(d => {
+        return category === 'totalScore' ? d.totalScore : d.averageStat[category]
+      })
 
     svg
       .append('text')
@@ -146,7 +175,7 @@ class BarChart extends Component {
       .attr('y', margin / 1.9)
       .attr('transform', 'rotate(-90)')
       .attr('text-anchor', 'middle')
-      .text('Numbers')
+      .text(yAxisLabel)
 
     svg
       .append('text')
@@ -154,7 +183,7 @@ class BarChart extends Component {
       .attr('x', width / 2 + margin)
       .attr('y', 18)
       .attr('text-anchor', 'middle')
-      .text('Index')
+      .text(category)
 
   }
 

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Paper } from '@material-ui/core'
+import React, { Component, Fragment } from 'react'
+import { Paper, Tabs, Tab, AppBar } from '@material-ui/core'
 import BarChart from '../component/graph'
 import { withStyles } from '@material-ui/core/styles'
 
@@ -28,7 +28,9 @@ class Performance extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      value: 0
     }
+    this.handleChange = this.handleChange.bind(this)
   }
 
   componentDidMount() {
@@ -98,27 +100,89 @@ class Performance extends Component {
         totalScore: stat.scores,
         averageStat: averageStat})
     })
-    console.log(finalStat)
     this.setState({
       finalStat
     })
   }
+
+  handleChange(event, value) {
+    console.log(value)
+    this.setState({ value })
+  }
+
   render() {
     console.log(this.state)
     const { classes } = this.props
+    const { value } = this.state
     return (
-      <main className={classes.layout} style={{margin: '0, auto'}}>
-        <Paper className={classes.paper} elevation={1}>
+      <Fragment>
+        <AppBar position="static" color='default'>
+          <Tabs
+            value={value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            scrollable
+            scrollButtons="auto"
+          >
+            <Tab label="Total Score" />
+            <Tab label="Driver" />
+            <Tab label="3-Wood" />
+            <Tab label="3-Iron" />
+            <Tab label="6-Iron" />
+            <Tab label="Putts on Green" />
+            <Tab label="Item Seven" />
+          </Tabs>
           <h2 style={{textAlign: 'center'}}>
           Performance
           </h2>
-          { this.state.finalStat && <BarChart size={[600, 500]}
-            style={{margin: 'auto'}}
-            data = {this.state}>
-          </BarChart> }
-        </Paper>
+          <main className={classes.layout} style={{margin: '0, auto'}}>
+            {value === 0 && <Paper className={classes.paper} elevation={1}>
+              { this.state.finalStat && <BarChart size={[600, 500]}
+                style={{margin: 'auto'}}
+                data = {this.state}
+                category = 'totalScore'>
+              </BarChart> }
+            </Paper>}
+            {value === 1 && <Paper className={classes.paper} elevation={1}>
+              { this.state.finalStat && <BarChart size={[600, 500]}
+                style={{margin: 'auto'}}
+                data = {this.state}
+                category = 'Driver'>
+              </BarChart> }
+            </Paper>}
+            {value === 2 && <Paper className={classes.paper} elevation={1}>
+              { this.state.finalStat && <BarChart size={[600, 500]}
+                style={{margin: 'auto'}}
+                data = {this.state}
+                category = '3-wood'>
+              </BarChart> }
+            </Paper>}
+            {value === 3 && <Paper className={classes.paper} elevation={1}>
+              { this.state.finalStat && <BarChart size={[600, 500]}
+                style={{margin: 'auto'}}
+                data = {this.state}
+                category = '3-iron'>
+              </BarChart> }
+            </Paper>}
+            {value === 4 && <Paper className={classes.paper} elevation={1}>
+              { this.state.finalStat && <BarChart size={[600, 500]}
+                style={{margin: 'auto'}}
+                data = {this.state}
+                category = '6-iron'>
+              </BarChart> }
+            </Paper>}
+            {value === 5 && <Paper className={classes.paper} elevation={1}>
+              { this.state.finalStat && <BarChart size={[600, 500]}
+                style={{margin: 'auto'}}
+                data = {this.state}
+                category = 'puttsGreen'>
+              </BarChart> }
+            </Paper>}
+          </main>
+        </AppBar>
 
-      </main>
+      </Fragment>
 
     )
   }
