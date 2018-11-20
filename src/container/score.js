@@ -135,12 +135,8 @@ class Score extends Component {
         open: false,
         holes: newHoles
       }
-      // const parsed = JSON.parse(stateData)
-
       localStorage.setItem('localData', JSON.stringify(localData))
-
     }
-
     e.target.reset()
   }
 
