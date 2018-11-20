@@ -75,20 +75,35 @@ class Score extends Component {
         let newPlayers = [ ]
         let currentHole = 1
         const lastCourse = res.length - 1
+        let open = true
         for (let i = 0; i < res[lastCourse].players.length; i++) {
           newPlayers.push(res[lastCourse].players[i])
         }
-        console.log(res[lastCourse].players[0].hole)
-        if (res[lastCourse].players[0].hole) {
-          currentHole = res[lastCourse].players[0].hole.length
+        let localData = localStorage.getItem('localData')
+        const parsed = JSON.parse(localData)
+        let newHoles = null
+        if (parsed) {
+          open = false
+
+          if (res[lastCourse].players[0].hole) {
+            const lastHoleIndex = res[lastCourse].players[0].hole.length
+            currentHole = parsed.holes[lastHoleIndex]
+          }
+          else {
+            currentHole = parsed.holes[0]
+          }
+          newHoles = parsed.newHole
         }
-        console.log(newPlayers)
+
+        console.log(currentHole)
         this.setState({
           players: newPlayers,
+          open: open,
           date: res[lastCourse].date,
           courseName: res[lastCourse].course,
           currentPlayer: res[lastCourse].players[0],
           currentHole,
+          holes: newHoles,
           gameId: res[lastCourse].id
         })
       })
@@ -118,8 +133,7 @@ class Score extends Component {
       })
       let localData = {
         open: false,
-        holes: newHoles,
-        currentHoles: newHoles[0]
+        holes: newHoles
       }
       // const parsed = JSON.parse(stateData)
 
@@ -186,6 +200,7 @@ class Score extends Component {
       })
       if (nextHole === 18) {
         this.props.history.push('/')
+        localStorage.clear()
       }
     }
     else {
