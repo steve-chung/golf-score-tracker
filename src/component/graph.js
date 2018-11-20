@@ -109,8 +109,8 @@ class BarChart extends Component {
             return (xScale(d.date) - 5)
           })
           .attr('width', xScale.bandwidth() + 10)
-
-        const y = yScale(actual)
+        const actualData = category === 'totalScore' ? actual.totalScore : actual.averageStat[category]
+        const y = yScale(actualData)
 
         svg.append('line')
           .attr('id', 'limit')
@@ -121,14 +121,14 @@ class BarChart extends Component {
 
         bar.append('text')
           .attr('class', 'divergence')
-          .attr('x', (d, n) => xScale(n + 1) + xScale.bandwidth() / 2)
+          .attr('x', (d) => xScale(d.date) + xScale.bandwidth() / 2)
           .attr('y', d => {
             return category === 'totalScore' ? yScale(d.totalScore) + 30 : yScale(d.averageStat[category]) + 30
           })
           .attr('fill', '#2F4A6D')
           .attr('text-anchor', 'middle')
           .text((d, idx) => {
-            const divergence = category === 'totalScore' ? (d.totalScore - actual).toFixed(1) : (d.averageStat[category] - actual).toFixed(1)
+            const divergence = category === 'totalScore' ? (d.totalScore - actualData).toFixed(1) : (d.averageStat[category] - actualData).toFixed(1)
 
             let text = ''
             if (divergence > 0) {
