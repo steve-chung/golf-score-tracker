@@ -56,7 +56,7 @@ class Score extends Component {
 
       }],
       courseName: '',
-      open: true,
+      open: false,
       currentHole: 1,
       currentPlayer: null,
       prevHolePlayers: [],
@@ -81,10 +81,11 @@ class Score extends Component {
         }
         let localData = localStorage.getItem('localData')
         const parsed = JSON.parse(localData)
+        let currentPlayer = res[lastCourse].players[0]
         let newHoles = null
         if (parsed) {
           open = false
-
+          currentPlayer = parsed.currentPlayer
           if (res[lastCourse].players[0].hole) {
             const lastHoleIndex = res[lastCourse].players[0].hole.length
             currentHole = parsed.holes[lastHoleIndex]
@@ -92,16 +93,15 @@ class Score extends Component {
           else {
             currentHole = parsed.holes[0]
           }
-          newHoles = parsed.newHole
+          newHoles = parsed.holes
         }
 
-        console.log(currentHole)
         this.setState({
           players: newPlayers,
           open: open,
           date: res[lastCourse].date,
           courseName: res[lastCourse].course,
-          currentPlayer: res[lastCourse].players[0],
+          currentPlayer: currentPlayer,
           currentHole,
           holes: newHoles,
           gameId: res[lastCourse].id
@@ -191,6 +191,8 @@ class Score extends Component {
     }
     const updatedPlayers = this.handleUpdatePlayer(playerNowObj, players, currentPlayer.id, playerScore, playerNow, holeIndex)
     const nextHole = holes.indexOf(currentHole) + 1
+    const localData = localStorage.getItem('localData')
+    let parsed = JSON.parse(localData)
 
     if (nextPlayerIndex === players.length) {
       this.setState({
@@ -209,6 +211,8 @@ class Score extends Component {
         currentPlayer: players[nextPlayerIndex]
       })
     }
+    parsed.currentPlayer = currentPlayer
+    localStorage.setItem('localData', JSON.stringify(parsed))
     this.handlePutScores(updatedPlayers)
   }
 
@@ -265,7 +269,6 @@ class Score extends Component {
     })
   }
   render() {
-    console.log(this.state)
     const { courseName, currentPlayer, currentHole } = this.state
     return (
       <div className='container' style={{margin: '0, auto'}}>
