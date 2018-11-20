@@ -53,10 +53,11 @@ class Score extends Component {
     super(props)
     this.state = {
       players: [{
-
+        hole: []
       }],
       courseName: '',
-      open: false,
+      open: true,
+      holes: [],
       currentHole: 1,
       currentPlayer: null,
       prevHolePlayers: [],
@@ -73,37 +74,17 @@ class Score extends Component {
       .then(res => res.json())
       .then(res => {
         let newPlayers = [ ]
-        let currentHole = 1
         const lastCourse = res.length - 1
-        let open = true
         for (let i = 0; i < res[lastCourse].players.length; i++) {
           newPlayers.push(res[lastCourse].players[i])
-        }
-        let localData = localStorage.getItem('localData')
-        const parsed = JSON.parse(localData)
-        let currentPlayer = res[lastCourse].players[0]
-        let newHoles = null
-        if (parsed) {
-          open = false
-          currentPlayer = parsed.currentPlayer
-          if (res[lastCourse].players[0].hole) {
-            const lastHoleIndex = res[lastCourse].players[0].hole.length
-            currentHole = parsed.holes[lastHoleIndex]
-          }
-          else {
-            currentHole = parsed.holes[0]
-          }
-          newHoles = parsed.holes
         }
 
         this.setState({
           players: newPlayers,
-          open: open,
           date: res[lastCourse].date,
           courseName: res[lastCourse].course,
-          currentPlayer: currentPlayer,
-          currentHole,
-          holes: newHoles,
+          currentPlayer: res[lastCourse].players[0],
+          currentHole: 1,
           gameId: res[lastCourse].id
         })
       })
@@ -131,16 +112,7 @@ class Score extends Component {
         holes: newHoles,
         currentHole: newHoles[0]
       })
-      let localData = {
-        open: false,
-        holes: newHoles
-      }
-      // const parsed = JSON.parse(stateData)
-
-      localStorage.setItem('localData', JSON.stringify(localData))
-
     }
-
     e.target.reset()
   }
 
@@ -191,8 +163,6 @@ class Score extends Component {
     }
     const updatedPlayers = this.handleUpdatePlayer(playerNowObj, players, currentPlayer.id, playerScore, playerNow, holeIndex)
     const nextHole = holes.indexOf(currentHole) + 1
-    const localData = localStorage.getItem('localData')
-    let parsed = JSON.parse(localData)
 
     if (nextPlayerIndex === players.length) {
       this.setState({
@@ -202,7 +172,6 @@ class Score extends Component {
       })
       if (nextHole === 18) {
         this.props.history.push('/')
-        localStorage.clear()
       }
     }
     else {
@@ -211,8 +180,6 @@ class Score extends Component {
         currentPlayer: players[nextPlayerIndex]
       })
     }
-    parsed.currentPlayer = currentPlayer
-    localStorage.setItem('localData', JSON.stringify(parsed))
     this.handlePutScores(updatedPlayers)
   }
 
