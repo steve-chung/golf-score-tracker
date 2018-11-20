@@ -246,6 +246,19 @@
         }
       ],
       "id": 1
+    },
+    {
+      "course": "Los Coyotes Country Club",
+      "date": 1542505980000,
+      "players": [
+        {
+          "id": 1,
+          "name": "steve",
+          "avgScore": 0,
+          "email": ""
+        }
+      ],
+      "id": 2
     }
   ]
 }
