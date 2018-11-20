@@ -266,10 +266,21 @@
               "secondClub": "6-iron",
               "secondDistance": "150",
               "stroksGreen": "3",
-              "totalShots": "8"
+              "totalShots": "6"
+            },
+            {
+              "hole": {
+                "2": 2
+              },
+              "firstClub": "Driver",
+              "firstDistance": "260",
+              "secondClub": "3-wood",
+              "secondDistance": "220",
+              "stroksGreen": "4",
+              "totalShots": "9"
             }
           ],
-          "totalScore": 8
+          "totalScore": 15
         }
       ],
       "id": 2
