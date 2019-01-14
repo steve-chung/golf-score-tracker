@@ -32,7 +32,7 @@ User can login and add players and reserve Game.  Upon play the game, user start
 1. Install Frontend
 
 ````
-cd client
+cd src
 npm install
 
 ````
@@ -43,20 +43,13 @@ npm install
 1. Client
 
 ```
- cd client
+ cd src
  npm run dev
 ```
 
 2. Server
 
-Windows
 ````
-cd server
-python app.py
+nodemon index.js
 ````
 
-Mac
-````
-cd server
-python3 app.py
-````
