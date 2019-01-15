@@ -26,7 +26,7 @@ User can login and add players and reserve Game.  Upon play the game, user start
 
 User can search courses to play at current location or desginated location.
 
-![golf-score-keeper](https://user-images.githubusercontent.com/42354856/47394959-a805cd80-d6d9-11e8-9456-74c56a98cc0e.gif
+![golf-score-keeper](https://user-images.githubusercontent.com/42354856/47394959-a805cd80-d6d9-11e8-9456-74c56a98cc0e.gif)
 
 
 ## Installation
