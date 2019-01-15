@@ -26,7 +26,7 @@ User can login and add players and reserve Game.  Upon play the game, user start
 
 User can search courses to play at current location or desginated location.
 
-![search course](https://i.imgur.com/cDKE8nu.gif)
+![search course](https://i.imgur.com/889NfoX.gif)
 
 
 
