@@ -24,7 +24,8 @@ User can login and add players and reserve Game.  Upon play the game, user start
 
 ## Demo
 
-
+1. User can search courses to play at current location or desginated location.
+[![Watch the video](https://imgur.com/cDKE8nu)](https://www.youtube.com/watch?v=tUyJOc41jPs)
 
 
 ## Installation
