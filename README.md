@@ -1,7 +1,7 @@
 # golf-score-tracker-fullstack
 
 
-User can login and add players and reserve Game.  Upon play the game, user starts play with lastest reserved game and keep scores.  User can see his or her performance by analyzing by clubs and scores.  This app uses React for front end, Python 3 for back end and Postgres DB.  
+User can login and add players and reserve Game.  Upon play the game, user starts play with lastest reserved game and keep scores.  User can see his or her performance by analyzing by clubs and scores.  This app uses React for front end, Python 3 for back end and Postgres DB will be used on the golf-score-tracker fullstack.  Please see golf-score-tracker-fullstack for more detail.  
 
 ## Features
 
